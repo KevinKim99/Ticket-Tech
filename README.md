@@ -1,5 +1,5 @@
 # Ticket-Tech
 
-Hello, welcome to COSC 310 Software Engineer project 
+Hello, welcome to our COSC 310 Software Engineering project 
 
-We are making ticket buy & sell software program
+We are making a ticket buy & sell software program
