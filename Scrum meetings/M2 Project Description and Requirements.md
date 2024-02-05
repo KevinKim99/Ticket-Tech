@@ -7,7 +7,7 @@
 - A high-level description of what your project will offer. The description needs to adequately detail a summary of what it will do, but you have a lot of freedom to decide what your final product will look like as long as you perform a realistic analysis of the problem.  
 - Your user requirements (what will users be able to do with the system),
 - Your functional requirements (what will the system do to support users), and non-functional requirements. If you feel that other categories of requirements are needed, you can include them.  Recall that the requirements are used not only to determine the use cases that need to be developed but also to measure the success of the project (i.e., did you implement everything that was identified during the requirements engineering phase). Consider using proto-persona or journey lines to ensure you can properly and completely visualize how a user will interact with your project.  Don't forget that you will have different categories of users.  
-- Your use case diagrams with the proper level of detail describing the specific scenarios.  You will need to include your diagram as well as detailed text  
+- Your use case diagrams with the proper level of detail describing the specific scenarios.  You will need to include your diagram as well as detailed text ![Use-Case-Diagram](../images/Ticket-Teck-UseCaseDiagram.jpg)
 #### In reviewing your requirements, the reader should clearly understand what the team is proposing to build. 
 
  
