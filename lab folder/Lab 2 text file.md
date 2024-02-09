@@ -1,5 +1,7 @@
 # Lab 2 txt file
 
+![lab2_usercase](/images/lab_2_user_cases.png)
+
 ## Use Case 1 - Search for Venue
 
 **Primary actor:** Users (purchasers)
