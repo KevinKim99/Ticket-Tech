@@ -28,6 +28,25 @@
     - Extensions:
         - 2a. Venue not found in location
 	    - 2a1 display simple error message stating no results found
+    ###### Use Case 2 - Search for artist:
+    - Primary actor: Users (purchasers)
+    - Scope: Concert fans / sports fans
+    - Level: User goal
+    - Stakeholders and interests:
+        - Purchaser - wants to browse by artist and find the artist they want and all of their shows
+        - Admin - can observe what artist are doing what shows 
+    - Precondition: User must access Ticket-Tech, search function must work.
+    - Minimal Guarantee: Artist selected and allows user to see upcoming events that artist is apart of 
+    - Success Guarantee: artist or band is selected and events at venues are recommended to users.
+    - Main success scenario:
+        - User wants to purchase a ticket for a certain artist
+        - User searches for an artist or a band
+        - Ticket-Tech shows the venue or venues that the artist or band is a part of. in the given area User gets access to venue that the artist is at  and can see all upcoming events and dates at a certain artist/band
+        - User can choose events they want to purchase tickets fo
+    - Extensions:
+        - 2a. Artist not found
+        - 2a1 display simple error message stating no results found
+
     ###### Use Case 3 - Promotional / Sales / Presales
     - Primary actor: Admin
     - Scope: Ticket-Tech promotional department
