@@ -10,7 +10,7 @@
 - Your functional requirements (what will the system do to support users), and non-functional requirements. If you feel that other categories of requirements are needed, you can include them.  Recall that the requirements are used not only to determine the use cases that need to be developed but also to measure the success of the project (i.e., did you implement everything that was identified during the requirements engineering phase). Consider using proto-persona or journey lines to ensure you can properly and completely visualize how a user will interact with your project.  Don't forget that you will have different categories of users.  
 - Your use case diagrams with the proper level of detail describing the specific scenarios.  You will need to include your diagram as well as detailed text ![Use-Case-Diagram](../images/Ticket-Teck-UseCaseDiagram.jpg)   
 
-    ###### Use Case 1 - Search for Venue
+    ###### Use Case - Search for Venue
     - Primary actor: Users (purchasers)
     - Scope: Concert fans / sports fans
     - Level: User goal
@@ -28,7 +28,7 @@
     - Extensions:
         - 2a. Venue not found in location
 	    - 2a1 display simple error message stating no results found
-    ###### Use Case 2 - Search for artist:
+    ###### Use Case - Search for artist:
     - Primary actor: Users (purchasers)
     - Scope: Concert fans / sports fans
     - Level: User goal
@@ -47,7 +47,44 @@
         - 2a. Artist not found
         - 2a1 display simple error message stating no results found
 
-    ###### Use Case 3 - Promotional / Sales / Presales
+    ###### Use Case Log in:
+    - Primary actor: Users (purchasers)
+    - Scope: Concert fans / sports fans
+    - Level: User goal
+    - Stakeholders and interests:
+    - Purchaser - able to log into their account to be able to purchase tickets at ease and to get promotional sales 
+    - Admin - can observe the people who have accounts that are purchasing tickets and when
+    - Precondition: User must access Ticket-Tech, must have made an account previously
+    - Minimal Guarantee: User able to login and see their account information
+    - Success Guarantee: proper authentication to ensure all users can access their accounts
+    - Main success scenario:
+        - User wants to have an account
+        - User wants to have credit card info saved for faster purchasing
+        - Ticket-Tech shows the user their account and able to show users promotions and presales if they have an account
+        - User able to sell their tickets back at MSRP, if they wish to do so
+    - Extensions:
+        - 2a. Account not found / invalid
+        - 2a1 display simple error message stating no account exists or invalid login
+    ###### Place order
+    - Primary actor: Users (purchasers)
+    - Scope: Concert fans / sports fans
+    - Level: User goal
+    - Stakeholders and interests:
+    - Purchaser - able to place an order for their tickets 
+    - Admin - can observe ticket sales, and release promotional sales
+    - Precondition: User must access Ticket-Tech, and have tickets in cart
+    - Minimal Guarantee: User able to place an order for their tickets they want
+    - Success Guarantee: able to add tickets from a venue/ artist and place and order
+    - Main success scenario:
+        - User wants / found a venue they want to go to
+        - User has valid payment information
+        -  Ticket-Tech shows the user their cart and the tickets they placed and order in for
+    - Extensions:
+        - 2a. Cancel order / invalid credentials 
+        - 2a1 display simple error message stating error
+
+
+    ###### Use Case  - Promotional / Sales / Presales
     - Primary actor: Admin
     - Scope: Ticket-Tech promotional department
     - Level: Admin goal
