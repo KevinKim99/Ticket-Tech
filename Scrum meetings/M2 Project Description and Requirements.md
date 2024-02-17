@@ -109,7 +109,6 @@
 	        - 2a1 display simple error message stating no results found
         - 3a. Tickets sold in between selection and checkout
 	        - 3a1 display error message stating tickets are already sold
-            # Not sure if this is enough, it was just copy paste from lab2 document
 
 
 #### In reviewing your requirements, the reader should clearly understand what the team is proposing to build. 
