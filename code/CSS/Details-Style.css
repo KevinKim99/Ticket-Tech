@@ -61,9 +61,11 @@ article {
 }
 
 img {
+    margin-right: 2%;
+    float: left;
     height: auto;
-    width: 100%;
-    max-width: 100%;
+    width: 35%;
+    max-width: 35%;
 }
 
 figure {
@@ -98,17 +100,9 @@ h2 {
 }
 
 p {
-    line-height: 1.6;
+    line-height: 0.5;
+    font-size: medium;
     color: #555;
-}
-
-.linkbutton {
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 3px;
 }
 
 article {
