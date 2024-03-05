@@ -105,6 +105,12 @@ p {
     color: #555;
 }
 
+p2 {
+    line-height: 1.5;
+    font-size: medium;
+    color: #555;
+}
+
 article {
     border: #333;
     flex: 0 1 80%;
