@@ -50,10 +50,10 @@ a:hover {
 
 .container {
     background: #eae1e1;
-    width: 960px;
+    width: flex;
     margin: 0 auto;
     position: relative;
-    margin-top: 5%;
+    margin-top: 2%;
 }    
 
 .leftbox {
@@ -62,9 +62,6 @@ a:hover {
     position: absolute;
 }
 
-.rightbox {
-    
-}
 
 .btn{
     margin-top: 5%;
