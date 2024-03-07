@@ -8,9 +8,10 @@
 - You will also need to include a class diagram for the different parts of the system (this will help you to think about your testing).  The reader should be able to understand the different entities in the system (class diagram), how they interact with respect to time (sequence), and the data that is moving throughout the system (DFD).
 
 ### Rubric:
-- Architecture diagram (5 marks)
+
 - Sequence diagrams (5 marks)
-- DFD (5 marks)
 - Class diagram (5 marks)
+- Testing plan (5 marks)
+- Design patterns (5 marks)
 
 #### Total: 20 
