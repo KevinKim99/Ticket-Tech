@@ -11,8 +11,8 @@
     <header>
         <h1>Ticket-Tech</h1>
         <nav>
-            <!-- always update these when you make a new header, do for all pages-->
             <ul>
+                <!-- always update these when you make a new header, do for all pages-->
                 <li><a href="Concerts.html">Concerts</a></li>
                 <li><a href="search-form.html">Search</a></li>
                 <li><a href="login.html">Log In</a></li>
@@ -20,50 +20,101 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <article>
-            <h1>
+    <main id="concertList"></main>
+
+    <script>
+        // file in for csv using try-catch as that is best for error handling until we do proper error handling
+        async function fetchCSV() {
+            try {
+                const response = await fetch('/Database/ticket_tech_database.csv');
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+
+                const text = await response.text();
+                const data = text.split('\n').map(row => row.split(','));
+
+                // assume headers in csv
+                const headers = data[0];
+                const concertData = data.slice(1).map(row => {
+                    const concert = {};
+                    headers.forEach((header, index) => {
+                        concert[header] = row[index];
+                    });
+                    return concert;
+                });
+
+                return concertData;
+            } catch (error) {
+                console.error(error);
+                return null; // Return null and throw error
+            }
+        }
+
+        // Function to generate HTML content for each concert
+        // for every artist name we just make a new funciton of this below:
+        // images/${artist.ArtistName.replace(/\s+/g, '-').toLowerCase()}.jpg 
+        // ^ does special image and string concatination, I stole this, as I could never derive this
+        // commented out the individual images as this is not nice and clean as we dont have that data yet so just put the old place holder in
+        function generateConcertHTML(artist) {
+            return `
+            <article>
+                <h1>
+                    <div>
+                        <a rel="author">${artist.ArtistName}</a>
+                    </div>
+                </h1>
                 <div>
-                    <a rel="author">Metallica</a>
+                    <figure>
+                        <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
+                        <!--<img src="images/${artist.ArtistName.replace(/\s+/g, '-').toLowerCase()}.jpg" alt="${artist.ArtistName} Image"> -->
+                    </figure>
+                    <button class="see-more-button" onclick="location.href='Details.html?artist=${artist.ArtistName}'">See More Details</button>
                 </div>
-            </h1>
-            <div>
-                <figure>
-                    <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
-                </figure>
-                <!--DETAILS PAGE NEEDS TO BE MADE, Buttons when cliked point nowhere -->
-                <button class="see-more-button" onclick="location.href='Details.html'">See More Details</button>
-            </div>
-        </article>
-        <article>
-            <h1>
-                <div>
-                    <a rel="author">AC/DC</a>
-                </div>
-            </h1>
-            <div>
-                <figure>
-                    <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
-                </figure>
-                <!--DETAILS PAGE LINK-->
-                <button class="see-more-button" onclick="location.href='Details.html'">See More Details</button>
-            </div>
-        </article>
-        <article>
-            <h1>
-                <div>
-                    <a rel="author">Koe Wetzel</a>
-                </div>
-            </h1>
-            <div>
-                <figure>
-                    <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
-                </figure>
-                <!--DETAILS PAGE Link -->
-                <button class="see-more-button" onclick="location.href='Details.html'">See More Details</button>
-            </div>
-        </article>
-    </main>
+            </article>`;
+        }
+
+        // Function to filter out duplicate artists as we dont want 5 of each we will show their dates in the see more details page
+        function filterUniqueArtists(concertData) {
+            const uniqueArtists = [];
+            const seenArtists = new Set();
+
+            for (const concert of concertData) {
+                const artistName = concert.ArtistName;
+
+                if (!seenArtists.has(artistName)) {
+                    seenArtists.add(artistName);
+                    uniqueArtists.push(concert);
+                }
+            }
+
+            return uniqueArtists;
+        }
+
+        // Function to render concert data on the page I stole this as I have no clue 
+        async function renderConcerts() {
+            const concertListContainer = document.getElementById('concertList');
+            const concertData = await fetchCSV();
+
+            if (concertData) {
+                const uniqueArtists = filterUniqueArtists(concertData);
+
+                uniqueArtists.forEach(concert => {
+                    const concertHTML = generateConcertHTML(concert);
+                    concertListContainer.innerHTML += concertHTML;
+                });
+            } else {
+                // Handle the case when there is an error fetching the data tie this to error handling when we do so
+                concertListContainer.innerHTML = '<p>Error fetching data. Please try again later.</p>';
+            }
+        }
+
+        // Call the function to render concerts when the page loads
+        window.onload = function() {
+            renderConcerts();
+        };
+    </script>
 </body>
 
 </html>
