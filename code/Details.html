@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/Details-Style.css">
+    <script src="javaScript/cart.js" defer></script>
 </head>
 
 <body>
@@ -19,33 +20,39 @@
                 <li><a href="signup.html">Sign Up</a></li>
             </ul>
         </nav>
-       </header>
+        <div id="cart-icon" onclick="showCart()">🛒</div>
+    </header>
 </body>
-<main> 
-    <article> 
-        <h1>  
-                <!--Image-->
-                <figure>
-                    <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
-                </figure>
-                <!--Important Event Info-->
-                <a rel="author">Artist Name</a>
-                <p>Location: Santa Monica Bay </p>
-                <p>Date: 3:00 PM 23/08/24</p>
-                <p>Price: $250</p> 
+<main>
+    <article>
+        <h1>
+            <!--Image-->
+            <figure>
+                <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
+            </figure>
+            <!--Important Event Info-->
+            <a rel="author">Artist Name</a>
+            <p>Location: Santa Monica Bay </p>
+            <p>Date: 3:00 PM 23/08/24</p>
+            <p>Price: $250</p>
             <div>
                 <p2>
                     <!--Event Description-->
-                    <br>
-                        Description:
+                    <br> Description: The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over
+                    the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
                     </br>
-    
-                    The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
-               
-                </p2>          
-            </div>     
+                </p2>
+            </div>
+            <div>
+                <button class="see-more-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
+            </div>
         </h1>
     </article>
 </main>
+<script>
+    window.onload = function() {
+        displayCartContent();
+    };
+</script>
 
 </html>
