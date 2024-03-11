@@ -50,16 +50,12 @@ a:hover {
 
 .container {
     background: #d5d1d1;
-    width: flex;
-    margin: 0 auto;
-    position: relative;
     margin-top: 2%;
 }    
 
 .leftbox {
-    color: #5c3333;
+    color: #000000;
     float: left;
-    position: absolute;
 }
 
 
