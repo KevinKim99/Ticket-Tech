@@ -18,7 +18,7 @@ CREATE TABLE Concerts (
 );
 
 -- Insert data into Artists table
-INSERT INTO Artists (ArtistId, ArtistName)
+INSERT INTO Artists (ArtistId, ArtistName, ArtistImage)
 VALUES
     (1, 'The Electric Tigers', "https://drive.google.com/file/d/1frS-3GGUeoOrFW6Vpk36Aup_1mCnHud1/view?usp=sharing"),
     (2, 'Neon Dreamers', "https://drive.google.com/file/d/1b98JOTnkWdT04ljimUMrSYEUi151gvKU/view?usp=sharing"),
