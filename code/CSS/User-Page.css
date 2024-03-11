@@ -63,3 +63,6 @@ a:hover {
     margin-top: 5%;
     background-color: #9eaaef;
 }
+.noneDisplay{
+    display:none;
+}
