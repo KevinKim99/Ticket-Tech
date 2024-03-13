@@ -115,6 +115,22 @@ p2 {
 div{
     padding-top: 12%;
 }
+button{
+    float: right;
+    height: 60px;
+    width: 30%;
+    background-color: #555;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.book-event-button:hover {
+    background-color: #333;
+}
 
 article {
     border: #333;
