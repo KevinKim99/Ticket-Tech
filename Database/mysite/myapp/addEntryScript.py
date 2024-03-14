@@ -1,6 +1,6 @@
 import datetime
 #from .views import addConcert 
-from .views import addArtist
+#from .views import addArtist
 
 #TODO add all entries for artists and concerts
 
