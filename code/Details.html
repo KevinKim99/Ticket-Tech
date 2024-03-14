@@ -21,9 +21,54 @@
         </nav>
        </header>
 </body>
+<!--Get Artist Name from URL-->
+<script>
+    let params = new URLSearchParams(location.search);
+    let artist = params.get('artist');
+
+    void function parseDatabase(){ 
+        /*
+        query database using the artist name
+            let price = artist.getTicketprice()
+            let location = artist.getLocation()
+            let date = artist.getDate()
+<main>
+    <article>
+         <h1> 
+                 <figure>
+                    <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
+                </figure>
+                //Important Event Info
+                <a rel="author">Artist Name</a>
+                <p>Location: + location </p>
+                <p>Date: + date </p>
+                <p>Price: + price </p> 
+                           <div>
+                <p2>
+                   //Event Description
+                    <br>
+                        Description:
+                    </br>
+    
+                    The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
+               
+                </p2>          
+            </div>     
+            <div>
+                <button class="book-event-button" onclick="location.href='Cart.html'">Book Event</button>
+            </div>
+        </h1>
+    </article>
+</main>
+        */
+    }
+
+    console.log(artist)
+</script>
 <main> 
     <article> 
         <h1>  
+            <!-- I will wait until the DB is properly useable to modify this portion of the details page-->
                 <!--Image-->
                 <figure>
                     <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
