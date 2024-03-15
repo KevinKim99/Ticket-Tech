@@ -17,6 +17,7 @@ CREATE TABLE Concerts (
     FOREIGN KEY (ArtistId) REFERENCES Artists(ArtistId)
 );
 
+
 -- Insert data into Artists table
 INSERT INTO Artists (ArtistId, ArtistName, ArtistImage)
 VALUES
