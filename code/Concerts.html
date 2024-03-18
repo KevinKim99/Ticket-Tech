@@ -112,6 +112,30 @@
                 concertListContainer.innerHTML = '<p>Error fetching data. Please try again later.</p>';
             }
         }
+        // Testing function
+        async function fetchConcertData() {
+            // Simulated async function for fetching concert data, does nothing to our actual data
+            return [{
+                artist: "Artist 1",
+                venue: "Venue 1",
+                date: "2024-04-01"
+            }, {
+                artist: "Artist 2",
+                venue: "Venue 2",
+                date: "2024-04-02"
+            }, {
+                artist: "Artist 3",
+                venue: "Venue 3",
+                date: "2024-04-03"
+            }];
+        }
+
+        function renderConcerts(concerts) {
+            // Simulated rendering function
+            const concertList = document.getElementById('concertList');
+            concertList.innerHTML = concerts.map(concert => `<li>${concert.artist} - ${concert.venue}, ${concert.date}</li>`).join('');
+        }
+        // end of testing functions
 
         // Call the function to render concerts when the page loads
         window.onload = function() {

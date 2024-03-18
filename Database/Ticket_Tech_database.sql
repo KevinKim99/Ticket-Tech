@@ -1,7 +1,8 @@
 -- Create Artists table
 CREATE TABLE Artists (
     ArtistId INTEGER PRIMARY KEY,
-    ArtistName VARCHAR(255)
+    ArtistName VARCHAR(255),
+    ArtistImage VARCHAR(255)
 );
 
 -- Create Concerts table
@@ -16,39 +17,40 @@ CREATE TABLE Concerts (
     FOREIGN KEY (ArtistId) REFERENCES Artists(ArtistId)
 );
 
+
 -- Insert data into Artists table
-INSERT INTO Artists (ArtistId, ArtistName)
+INSERT INTO Artists (ArtistId, ArtistName, ArtistImage)
 VALUES
-    (1, 'The Electric Tigers'),
-    (2, 'Neon Dreamers'),
-    (3, 'The Funky Monkeys'),
-    (4, 'Cosmic Groove'),
-    (5, 'Midnight Serenade'),
-    (6, 'Electric Pulse'),
-    (7, 'Echo Chamber'),
-    (8, 'Sonic Boom'),
-    (9, 'Retro Rockets'),
-    (10, 'The Groove Masters'),
-    (11, 'The Funky Jazz Cats'),
-    (12, 'The Midnight Owls'),
-    (13, 'The Blue Notes'),
-    (14, 'The Velvet Underground'),
-    (15, 'The Silk Tones'),
-    (16, 'The Smooth Operators'),
-    (17, 'The Rhythm Rebels'),
-    (18, 'The Soul Sisters'),
-    (19, 'The Funky Bunch'),
-    (20, 'The Groovy Gang'),
-    (21, 'The Jazz Legends'),
-    (22, 'The Moonlight Trio'),
-    (23, 'The Jazz Ensemble'),
-    (24, 'The Harmony Quartet'),
-    (25, 'The Jazz Cats'),
-    (26, 'The Swing Set'),
-    (27, 'The Piano Trio'),
-    (28, 'The Funk Masters'),
-    (29, 'The Soulful Singers'),
-    (30, 'The Blues Brothers');
+    (1, 'The Electric Tigers', "https://drive.google.com/file/d/1frS-3GGUeoOrFW6Vpk36Aup_1mCnHud1/view?usp=sharing"),
+    (2, 'Neon Dreamers', "https://drive.google.com/file/d/1b98JOTnkWdT04ljimUMrSYEUi151gvKU/view?usp=sharing"),
+    (3, 'The Funky Monkeys', "https://drive.google.com/file/d/11AxDiz6NpGn4X60yPmuJMe85alfaS-LW/view?usp=sharing"),
+    (4, 'Cosmic Groove', "https://drive.google.com/file/d/1CTKRSSXHJYlHia-zKg9T77MC7_L-o9lA/view?usp=sharing"),
+    (5, 'Midnight Serenade', "https://drive.google.com/file/d/1ycCM8i6Ub7qQvl-D3Sg27r0LWKQj7H3x/view?usp=sharing"),
+    (6, 'Electric Pulse', "https://drive.google.com/file/d/1dLwNNVKN2HQerH-8KyHHK8Il495BG2a7/view?usp=sharing"),
+    (7, 'Echo Chamber', "https://drive.google.com/file/d/11ELd3EUYlgwwHbRzjNmTzdVMaesFiQ5D/view?usp=sharing"),
+    (8, 'Sonic Boom', "https://drive.google.com/file/d/1fXAKAKYBl-k5P3grS8c2HwcQ0s1d-crA/view?usp=sharing"),
+    (9, 'Retro Rockets', "https://drive.google.com/file/d/1AvIqYTozc15UeRJdx3L4308AE41oCPdf/view?usp=sharing"),
+    (10, 'The Groove Masters', "https://drive.google.com/file/d/19J9QmNI9ueJXmvDMt-bthiaFODUcFAvx/view?usp=sharing"),
+    (11, 'The Funky Jazz Cats', "https://drive.google.com/file/d/1JVrR--lnqNcvCKB4W1k-lbWqPbCRLDn1/view?usp=sharing"),
+    (12, 'The Midnight Owls', "https://drive.google.com/file/d/12uw4rZEgGINxIJaK2wzDp148cbv2btf9/view?usp=sharing"),
+    (13, 'The Blue Notes', "https://drive.google.com/file/d/1kodm3HbnJKYNqJXBpFf4IKaiQsZaUpQq/view?usp=sharing"),
+    (14, 'The Velvet Underground', "https://drive.google.com/file/d/1jwahV58FKmKCkLmsg02sPscoAQhRjDn-/view?usp=sharing"),
+    (15, 'The Silk Tones', "https://drive.google.com/file/d/1gqZH8LN4I1V5xAEN4qAteJ9aG12wv19j/view?usp=sharing"),
+    (16, 'The Smooth Operators', "https://drive.google.com/file/d/1wOwz1ZL_5kTqdqtLGEdDp9MJjbt3RNCq/view?usp=sharing"),
+    (17, 'The Rhythm Rebels', "https://drive.google.com/file/d/1jZH3WCqgTMHBwUf1V1z9RK8G16Ye-Wub/view?usp=sharing"),
+    (18, 'The Soul Sisters', "https://drive.google.com/file/d/1pg0y00AW5sTCH9Hq9hdC1KerM9DHF9Y4/view?usp=sharing"),
+    (19, 'The Funky Bunch', "https://drive.google.com/file/d/1jw_5t41d6wb_K70Q9aRLRF_YmxMMp8oz/view?usp=sharing"),
+    (20, 'The Groovy Gang', "https://drive.google.com/file/d/1jV2iG39xGCS1txJulCuZqkT2rdtn-StM/view?usp=sharing"),
+    (21, 'The Jazz Legends', "https://drive.google.com/file/d/1Lb6em21y8FHUw2FpM2n_owJsrLXpccKG/view?usp=sharing"),
+    (22, 'The Moonlight Trio', "https://drive.google.com/file/d/1DRkWqyPmQyJsVmc-CgRlVA12zL-FqaMh/view?usp=sharing"),
+    (23, 'The Jazz Ensemble', "https://drive.google.com/file/d/1IcqQy_GHo8F0LHMeDztueRv_X7b3yCH1/view?usp=sharing"),
+    (24, 'The Harmony Quartet', "https://drive.google.com/file/d/1N9gEICWRnGykhVYBEMBW-jggKUvwf7oq/view?usp=sharing"),
+    (25, 'The Jazz Cats', "https://drive.google.com/file/d/10VYlyKRGMD7vUPnmuRdQaepSfOoS2lUk/view?usp=sharing"),
+    (26, 'The Swing Set', "https://drive.google.com/file/d/1mMHCeoLNZ3tbS2RjhjMNDANn3pw-O57W/view?usp=sharing"),
+    (27, 'The Piano Trio', "https://drive.google.com/file/d/1Yysi95GFCPYh53MuQ7cGgrxtsUzf9Q0-/view?usp=sharing"),
+    (28, 'The Funk Masters', "https://drive.google.com/file/d/1mIzzzrsZrVf8yr-OrlLJvvDZQP8uGhbj/view?usp=sharing"),
+    (29, 'The Soulful Singers', "https://drive.google.com/file/d/1H5OAwUplsXFGmuJYpiJKHR6tYNxuwskn/view?usp=sharing"),
+    (30, 'The Blues Brothers', "https://drive.google.com/file/d/1cYLKevfQ9oSw2_AHpXLlyurguiPBZ7AJ/view?usp=sharing");
 
 -- Insert data into Concerts table
 INSERT INTO Concerts (ArtistId, ConcertDate, Venue, City, TicketQuantity, TicketPrice)

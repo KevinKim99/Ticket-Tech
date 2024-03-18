@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <!-- <link rel="stylesheet" href="fontawesome/css/all.css"> -->
     <link rel="stylesheet" href="CSS/User-Page.css">
-    <script src="javaScript/cart.js" defer></script>
     <title>User Account</title>
 </head>
 
@@ -22,29 +25,28 @@
                 <li><a href="search-form.html">Search</a></li>
                 <li><a href="Home.html">Log Out</a></li>
             </ul>
-        </nav>
-        <div id="cart-icon" onclick="showCart()">🛒</div>
+        </nav> 
     </header>
 
 
 
     <div class="container">
-        <div class="d-flex justify-content-between">
-            <div class="wleftbox">
+        <div class="w-100 d-flex justify-content-between">
+            <div class="w-25 leftbox">
                 <div>
-                    <a href="#">My Tickets</a>
+                    <a id="ticketButton" href="#">My Tickets</a>
                 </div>
                 <div>
-                    <a href="#">Personal Information</a>
+                    <a id="profileButton" href="#">Personal Information</a>
                 </div>
                 <div>
-                    <a href="#">Payment Information</a>
+                    <a id="paymentButton" href="#">Payment Information</a>
                 </div>
             </div>
-
+    
             <div class="w-75 p-3 rightbox">
 
-                <div class="tickets">
+                <div id="ticket" class="tickets">
                     <h1>My Tickets</h1>
                     <div>
                         <h2>Upcoming Events</h2>
@@ -55,37 +57,37 @@
                         <a href="#">#110231231 </a>
                     </div>
                 </div>
-
-                <div class="profile">
+                
+                <div id="profile" class="profile noneDisplay">
                     <h1>My Profile</h1>
                     <div>
                         <h2>Username</h2>
                         <input type="text" value="qwerty1111" class="input" v-model="user.username">
                     </div>
-
+        
                     <div>
                         <h2>Email</h2>
                         <input type="email" value="helloworld@gmail.com" class="input" v-model="user.email">
                     </div>
-
+        
                     <div>
                         <h2>Password</h2>
                         <input type="password" value="12341234" class="input" v-model="user.password">
                     </div>
                 </div>
-
-                <div class="payment">
+        
+                <div id="payment" class="payment noneDisplay">
                     <h1>Payment Information</h1>
                     <div>
                         <h2>Payment Method</h2>
                         <input type="text" value="Master Card - John" class="input" v-model="payment.method">
                     </div>
-
+        
                     <div>
                         <h2>Billing Address</h2>
                         <input type="text" value="3333 University Way, Kelowna" class="input" v-model="payment.address">
                     </div>
-
+        
                     <div>
                         <h2>Postal Code</h2>
                         <input type="text" value="V1V 1V7" class="input" v-model="payment.postalCode">
@@ -94,19 +96,20 @@
                 <button class="btn">Update</button>
 
 
-
+                
             </div>
         </div>
-
+        
     </div>
-
-
-
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="profile.js"></script>
+    
+     
+    
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="javaScript/userPage.js"></script>
+<script src="unit_testing/userPageTesting.js"></script>
 </body>
 
-
+    
 
 </html>
