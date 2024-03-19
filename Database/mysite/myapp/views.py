@@ -10,6 +10,9 @@ from .models import Artists
 def home(request):
     return render(request, "home.html")
 
+def concerts_view(request):
+    return render(request, 'Concerts.html')
+
 def todos(request):
     items = TodoItem.objects.all
     return render(request, "todos.html", {"todos": items})
