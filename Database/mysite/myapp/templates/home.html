@@ -1,5 +1,42 @@
-{% extends "base.html" %} {% block title %} Home Page {% endblock %}
-{% block content %}
-<p>this is the home page</p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{% static 'CSS/Style.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Ticket-Tech</h1>
+        <nav>
+            <!-- always update these when you make a new header, do for all pages-->
+            <ul>
+                <!-- can make things for concerts/ sports/ arts and theater either make them a hover dropdown menu and what you click points to the genre or just make it send you to a new page-->
+                <li><a href="{% url 'concerts' %}">Concerts</a></li>
+                <li><a href="{% url 'search-form'%}">Search</a></li>
+                <li><a href="{% url 'login'%}">Log In</a></li>
+                <li><a href="{% url 'signup'%}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+
+    </main>
+    <h1>Welcome to Ticket Ticket-Tech</h1>
+    <h3>Creators:</h3>
+    <ul>
+        <li>Erem Ozdemir</li>
+        <li>Eric Smith</li>
+        <li>Nathan Worth</li>
+        <li>Kevin Kim</li>
+        <li>Ken Anderson</li>
+    </ul>
+
+</body>
+
+</html>

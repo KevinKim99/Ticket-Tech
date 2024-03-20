@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Style.css">
+    <script src="javaScript/cart.js" defer></script>
+    <title>Search Form</title>
+</head>
+
+<body>
+    <header>
+        <h1>Ticket-Tech</h1>
+        <nav>
+            <ul>
+                <!-- always update these when you make a new header, do for all pages-->
+                <li><a href="{% url 'concerts' %}">Concerts</a></li>
+                <li><a href="{% url 'search-form'%}">Search</a></li>
+                <li><a href="{% url 'login'%}">Log In</a></li>
+                <li><a href="{% url 'signup'%}">Sign Up</a></li>
+            </ul>
+        </nav>
+        <div id="cart-icon" onclick="showCart()">🛒</div>
+    </header>
+
+    <!--function to send back to home page when X clicked on search-->
+    <!-- Goes to nothing as there isnt anything to query-->
+    <main>
+        <form action="{% url 'search-results'%}" method="get">
+            <label for="searchQuery">Search:</label>
+            <input type="text" id="searchQuery" name="q" required>
+            <button type="submit">Search</button>
+            <button type="button" onclick="goBackToHome()">X</button>
+        </form>
+    </main>
+    <script>
+        function goBackToHome() {
+            window.location.href = "{% url 'home'%}";
+        }
+    </script>
+</body>
+
+</html>

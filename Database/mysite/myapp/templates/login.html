@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Signup-Style.css">
+    <script src="javaScript/cart.js" defer></script>
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <h1>Ticket-Tech</h1>
+        <nav>
+            <!-- always update these when you make a new header, do for all pages-->
+            <ul>
+              <li><a href="{% url 'concerts' %}">Concerts</a></li>
+              <li><a href="{% url 'search-form'%}">Search</a></li>
+              <li><a href="{% url 'login'%}">Log In</a></li>
+              <li><a href="{% url 'signup'%}">Sign Up</a></li>
+            </ul>
+        </nav>
+        <div id="cart-icon" onclick="showCart()">🛒</div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Log In</h2>
+            <!--redirect when you want to register-->
+            <p>Don't have an account? <a href="{% url 'signup'%}">Register here</a>.</p>
+            <form id="loginForm" onsubmit="return validateForm(event)">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <p style="text-align: right;"><a href="#" onclick="forgotPassword()">Forgot Password?</a></p>
+                <button type="submit">Log In</button>
+            </form>
+
+        </div>
+    </main>
+
+    <script>
+        // Validation and form submission logic for login
+        function validateForm(event) {
+            event.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            if (validateLogin(username, password)) {
+                console.log("Login Successful!");
+                // Add a log to check the values of username and password
+                console.log("Username:", username);
+                console.log("Password:", password);
+                // KEVIN redirect when logged in!
+                window.location.href ="{% url 'userPage'%}";
+            } else {
+                console.log("Login Failed!");
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+
+        // Function to validate login credentials
+        function validateLogin(username, password) {
+            var userData = JSON.parse(localStorage.getItem("userData")) || [];
+
+            return userData.some(function(user) {
+                return user.username === username && user.password === password;
+            });
+        }
+    </script>
+
+</body>
+
+</html>

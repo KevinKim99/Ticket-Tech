@@ -10,6 +10,31 @@ from .models import Artists
 def home(request):
     return render(request, "home.html")
 
+def concerts_view(request):
+    return render(request, 'Concerts.html')
+
+def login_view(request):
+    return render(request, 'login.html')
+
+def Details_view(request):
+    return render(request, 'Details.html')
+
+def cart_view(request):
+    return render(request, 'cart.html')
+
+def searchform_view(request):
+    return render(request, 'search-form.html')
+
+def searchresults_view(request):
+    return render(request, 'search-results.html')
+
+def signup_view(request):
+    return render(request, 'signup.html')
+
+def userPage_view(request):
+    return render(request, 'userPage.html')
+
+
 def todos(request):
     items = TodoItem.objects.all
     return render(request, "todos.html", {"todos": items})
