@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Trending-Style.css">
+    <script src="path/to/cart.js" defer></script>
+    <title>Shopping Cart</title>
+</head>
+
+<body>
+    <header>
+        <h1>Ticket-Tech</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'concerts' %}">Concerts</a></li>
+                <li><a href="{% url 'search-form'%}">Search</a></li>
+                <li><a href="{% url 'login'%}">Log In</a></li>
+                <li><a href="{% url 'signup'%}">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Shopping Cart</h1>
+        <!-- create fake conents in here-->
+    </main>
+    <main id="cartContent">
+        <!-- Display cart items here Dont Mess with it -->
+    </main>
+
+</body>
+<script>
+    // Function to display cart items
+    function displayCartItems() {
+        const cartContent = document.getElementById('cart-content');
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        if (cartItems.length > 0) {
+            // Display each item in the cart
+            cartItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.textContent = `${item.name} - Quantity: ${item.quantity}, Price: ${item.price}`;
+                cartContent.appendChild(itemElement);
+            });
+        } else {
+            // If cart is empty, display a message
+            cartContent.textContent = 'Your cart is empty.';
+        }
+    }
+
+    // Run this function when the page loads
+    window.onload = function() {
+        // Add a test case for an empty cart
+        localStorage.removeItem('cartItems');
+        displayCartItems();
+
+        // Add a test case for a cart with items
+        const fakeItem = {
+            name: 'Fake Item',
+            price: 10.99,
+            quantity: 2
+        };
+
+        const cartItems = [fakeItem];
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        displayCartItems();
+
+        // Add a test case for displaying cart content
+        const anotherFakeItem = {
+            name: 'Another Fake Item',
+            price: 5.99,
+            quantity: 3
+        };
+
+        cartItems.push(anotherFakeItem);
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        displayCartItems();
+    };
+</script>
+
+</html>

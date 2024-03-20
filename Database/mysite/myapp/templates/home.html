@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'CSS/Style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{% static 'CSS/Style.css' %}">
 </head>
 
 <body>
@@ -16,9 +16,9 @@
             <ul>
                 <!-- can make things for concerts/ sports/ arts and theater either make them a hover dropdown menu and what you click points to the genre or just make it send you to a new page-->
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
-                <li><a href="search-form.html">Search</a></li>
-                <li><a href="login.html">Log In</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="{% url 'search-form'%}">Search</a></li>
+                <li><a href="{% url 'login'%}">Log In</a></li>
+                <li><a href="{% url 'signup'%}">Sign Up</a></li>
             </ul>
         </nav>
     </header>
