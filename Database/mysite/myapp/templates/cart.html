@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="CSS/Trending-Style.css">
-    <script src="path/to/cart.js" defer></script>
+    <link rel="stylesheet" href="{% static 'CSS/Trending-Style.css' %}">
+    <script src="{% static 'javaScript/cart.js' %}" defer></script>
     <title>Shopping Cart</title>
 </head>
 
