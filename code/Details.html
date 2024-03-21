@@ -24,7 +24,7 @@
     </header>
 </body>
 <script src="Database/mysite/myapp/views.py">
-    
+    //Grabbing Concert ID from URL
     let params = new URLSearchParams(location.search);
     let ConId = params.get('ConcertId');
     //Initializing Variables
@@ -33,6 +33,17 @@
     let location;
     let quantity;
     let price;
+    
+    async function fetchConcertData() {
+            // Sample information for testing
+            return [{
+                artist: "Artist 1",
+                venue: "Venue 1",
+                date: "2024-04-01",
+                price: "200",
+                quantity: "100"
+            }];
+        }
 
     void function fetchConcertInfo(){
         //Assigns values to the important variables by fetching information from the database
@@ -75,14 +86,15 @@
 
     }
 </script>
+<!--
 <main>
     <article>
         <h1>
-            <!--Image-->
+          
             <figure>
                 <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
             </figure>
-            <!--Important Event Info-->
+           
             <a rel="author">Artist Name</a>
             <p>Location: Santa Monica Bay </p>
             <p>Date: 3:00 PM 23/08/24</p>
@@ -90,7 +102,7 @@
             <p>Quantity: 150 tickets</p>
             <div>
                 <p2>
-                    <!--Event Description-->
+                    
                     <br> Description: The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over
                     the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
                     </br>
@@ -100,7 +112,7 @@
                 <button class="book-event-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
             </div>
         </h1>
-    </article>
+    </article>-->
 </main>
 <script>
     window.onload = function() {
