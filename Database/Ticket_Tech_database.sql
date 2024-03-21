@@ -17,6 +17,29 @@ CREATE TABLE Concerts (
     FOREIGN KEY (ArtistId) REFERENCES Artists(ArtistId)
 );
 
+CREATE TABLE client (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255)
+);
+
+CREATE TABLE payment (
+    id INTEGER PRIMARY KEY,
+    userId INTEGER,
+    paymentType VARCHAR(255),
+    address VARCHAR(255),
+    postalCode VARCHAR(255),
+    FOREIGN KEY (userId) REFERENCES client(id)
+);
+
+CREATE TABLE myTickets (
+    id INTEGER PRIMARY KEY
+    userId INTEGER,
+    concertId INTEGER,
+    FOREIGN KEY (concertId) REFERENCES Concerts(ConcertId)
+    FOREIGN KEY (userId) REFERENCES client(id)
+);
 
 -- Insert data into Artists table
 INSERT INTO Artists (ArtistId, ArtistName, ArtistImage)

@@ -3,7 +3,6 @@ from .models import TodoItem
 from .models import Concerts
 from .models import Artists
 
-
 # Create your views here.
 
 
@@ -56,6 +55,7 @@ def addConcert(ConcertId, ArtistId, ConcertDate, Venue, City, TicketQuantity, Ti
 def addArtist(ArtistId, ArtistName, ArtistImage):
     artist = Artists(ArtistId = ArtistId, ArtistName = ArtistName, ArtistImage = ArtistImage)
     artist.save()
+
 
 
 #TODO Add all artists and concerts
