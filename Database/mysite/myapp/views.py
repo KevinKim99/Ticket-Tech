@@ -2,6 +2,8 @@ from django.shortcuts import render, HttpResponse
 from .models import TodoItem
 from .models import Concerts
 from .models import Artists
+from django.core.exceptions import ObjectDoesNotExist
+
 
 
 # Create your views here.
@@ -56,6 +58,33 @@ def addConcert(ConcertId, ArtistId, ConcertDate, Venue, City, TicketQuantity, Ti
 def addArtist(ArtistId, ArtistName, ArtistImage):
     artist = Artists(ArtistId = ArtistId, ArtistName = ArtistName, ArtistImage = ArtistImage)
     artist.save()
+
+def removeArtist(artist_id):
+    try:
+        # Attempt to get the artist from the database
+        artist = Artists.objects.get(pk=artist_id)
+    except ObjectDoesNotExist:
+        # If the artist does not exist, return False
+        return False
+    
+    # Delete the artist
+    artist.delete()
+    return True
+
+
+def removeConcert(concert_id):
+    try:
+        # Attempt to get the concert from the database
+        concert = Concerts.objects.get(pk=concert_id)
+    except ObjectDoesNotExist:
+        # If the concert does not exist, return False
+        return False
+    
+    # Delete the concert
+    concert.delete()
+    return True
+
+
 
 
 #TODO Add all artists and concerts
