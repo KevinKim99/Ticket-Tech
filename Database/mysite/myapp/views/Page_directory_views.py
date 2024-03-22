@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from ..models import TodoItem
 from ..models import Concerts
 from ..models import Artists
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
