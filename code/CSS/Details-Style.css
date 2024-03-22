@@ -113,8 +113,9 @@ p2 {
 }
 
 div{
-    padding-top: 12%;
+    padding-top: 10%;
 }
+
 
 article {
     border: #333;
@@ -126,4 +127,21 @@ article {
     max-width: 600px;
     margin: 0 auto;
     margin-bottom: 10px;
+}
+
+button{
+    float: right;
+    height: 60px;
+    width: 30%;
+    background-color: #555;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.book-event-button:hover {
+    background-color: #333;
 }

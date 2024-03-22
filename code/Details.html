@@ -20,37 +20,103 @@
                 <li><a href="signup.html">Sign Up</a></li>
             </ul>
         </nav>
-        <div id="cart-icon" onclick="showCart()">🛒</div>
+        <d id="cart-icon" onclick="showCart()">🛒</d>
     </header>
 </body>
+<script src="Database/mysite/myapp/views.py">
+    //Grabbing Concert ID from URL
+    let params = new URLSearchParams(location.search);
+    let ConId = params.get('ConcertId');
+    //Initializing Variables
+    let ArtId;
+    let name;
+    let location;
+    let quantity;
+    let price;
+    
+    async function fetchConcertData() {
+            // Sample information for testing
+            return [{
+                artist: "Artist 1",
+                venue: "Venue 1",
+                date: "2024-04-01",
+                price: "200",
+                quantity: "100"
+            }];
+        }
+
+    void function fetchConcertInfo(){
+        //Assigns values to the important variables by fetching information from the database
+        //This is done by tapping into views.py and grabbing the variables of the objects.
+        ArtId = views.concert(ConId).ArtistId
+        name = views.artist(ArtId).ArtistName;
+        location = views.concert(ConId).Venue;
+        quantity = views.concert(ConId).TicketQuantity;
+        price = views.concert(ConId).TicketPrice;
+
+    function generateDetailsHTML(){
+        fetchConcertInfo();
+            return
+            `<article>
+                <h1>
+                  <figure>
+                      <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
+                  </figure>
+        
+                    <a rel="author">${name}</a>
+                    <p>Location: ${Venue} </p>
+                    <p>Date: 3:00 PM 23/08/24</p>
+                    <p>Price: ${price}</p>
+                    <p>Quantity: ${quantity}</p>
+                    <div>
+                        <p2>
+                            <br> Description: The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over
+                            the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
+                            </br>
+                        </p2>
+                    </div>
+                    <div>
+                        <button class="book-event-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
+                    </div>
+                </h1>
+            </article>;`
+        
+
+    }
+
+    }
+</script>
+<!--
 <main>
     <article>
         <h1>
-            <!--Image-->
+          
             <figure>
                 <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
             </figure>
-            <!--Important Event Info-->
+           
             <a rel="author">Artist Name</a>
             <p>Location: Santa Monica Bay </p>
             <p>Date: 3:00 PM 23/08/24</p>
             <p>Price: $250</p>
+            <p>Quantity: 150 tickets</p>
             <div>
                 <p2>
-                    <!--Event Description-->
+                    
                     <br> Description: The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over
                     the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
                     </br>
                 </p2>
             </div>
             <div>
-                <button class="see-more-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
+                <button class="book-event-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
             </div>
         </h1>
-    </article>
+    </article>-->
 </main>
 <script>
     window.onload = function() {
+        displayDetails;
         displayCartContent();
     };
 </script>

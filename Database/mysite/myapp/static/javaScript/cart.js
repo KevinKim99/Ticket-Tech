@@ -30,7 +30,7 @@ function updateCartIcon() {
 
     // event listener for cart click function
     cartIcon.addEventListener('click', function() {
-        window.location.href = "{% url 'cart'%}";
+        window.location.href = 'cart.html';
     });
 }
 
