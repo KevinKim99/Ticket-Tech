@@ -2,7 +2,13 @@ from django.shortcuts import render, HttpResponse
 from .models import TodoItem
 from .models import Concerts
 from .models import Artists
+
+from .models import client
+from .models import payment
+from .models import myTickets
+
 from django.core.exceptions import ObjectDoesNotExist
+
 
 
 
@@ -50,15 +56,28 @@ def artists(request):
     return render(request, "Artists.html", {"artistNames": items})
 
 
+
 def addConcert(ConcertId, ArtistId, ConcertDate, Venue, City, TicketQuantity, TicketPrice):
     concert = Concerts(ConcertId = ConcertId, ArtistId = ArtistId, ConcertDate = ConcertDate, Venue = Venue, City = City, TicketQuantity = TicketQuantity, TicketPrice = TicketPrice)
     concert.save()
-
 
 def addArtist(ArtistId, ArtistName, ArtistImage):
     artist = Artists(ArtistId = ArtistId, ArtistName = ArtistName, ArtistImage = ArtistImage)
     artist.save()
 
+
+def addClient(id, name, email, password):
+    client2 = client(id = id, name = name, email = email, password = password)
+    client2.save()
+
+def addPayment(id, userId, paymentType, address, postalCode):
+    payment2 = payment(id = id, userId = userId, paymentType = paymentType, address = address, postalCode = postalCode)
+    payment2.save()
+
+def addMyTickets(id, userId, concertId):
+    myTicket2 = myTickets(id = id, userId = userId, concertId = concertId)
+    myTicket2.save()
+    
 def removeArtist(artist_id):
     try:
         # Attempt to get the artist from the database
@@ -83,7 +102,6 @@ def removeConcert(concert_id):
     # Delete the concert
     concert.delete()
     return True
-
 
 
 
