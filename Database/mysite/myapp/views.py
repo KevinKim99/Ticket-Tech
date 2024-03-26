@@ -6,8 +6,13 @@ from .models import Artists
 from .models import client
 from .models import payment
 from .models import myTickets
+from .forms import SignUpForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+
 
 
 
@@ -20,9 +25,6 @@ def home(request):
 
 def concerts_view(request):
     return render(request, 'Concerts.html')
-
-def login_view(request):
-    return render(request, 'login.html')
 
 def Details_view(request):
     return render(request, 'Details.html')
@@ -102,3 +104,62 @@ def removeConcert(concert_id):
     # Delete the concert
     concert.delete()
     return True
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password
+from .models import client
+
+def signup_view(request):
+    # Handle signup logic here
+    return render(request, 'signup.html')
+
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        # Create a new Client object and save it to the database
+        new_client = client(name=username, email=email, password=password)
+        new_client.save()
+        return redirect('login_view')  # Redirect to the login page after signup
+    return render(request, 'signup.html')
+
+def login_view(request):
+    # Handle login logic here
+    return render(request, 'login.html')
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        # Check if the provided email and password match any client in the database
+        try:
+            matched_client = client.objects.get(email=email, password=password)
+            # Perform login logic here, such as setting session variables
+            return redirect('dashboard')  # Redirect to the dashboard after successful login
+        except client.DoesNotExist:
+            # Handle invalid credentials, e.g., display an error message
+            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+    return render(request, 'login.html')
+
+
+def get_artists(request):
+    try:
+        # Fetch all artists from the database
+        artists = Artists.objects.all().values('ArtistName', 'ArtistImage')
+        return JsonResponse(list(artists), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+def addArtist(ArtistId, ArtistName, ArtistImage):
+    artist = Artists(ArtistId=ArtistId, ArtistName=ArtistName, ArtistImage=ArtistImage)
+    artist.save()
+    
+def concerts_view(request):
+    concerts = Concerts.objects.all()
+    artists = Artists.objects.all()
+    return render(request, 'Concerts.html', {'concerts': concerts, 'artists': artists})
+
+#TODO Add all artists and concerts
+addArtist(3, "The Funky Monkeys", "https://drive.google.com/file/d/11AxDiz6NpGn4X60yPmuJMe85alfaS-LW/view?usp=sharing")
+
+

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'CSS/Trending-Style.css' %}">
-    <script src="javaScript/cart.js" defer></script>
+    <script src="{% static 'javaScript/cart.js' %}" defer></script>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
         <h1>Ticket-Tech</h1>
         <nav>
             <ul>
-                <!-- always update these when you make a new header, do for all pages-->
+                <!-- Update these links accordingly -->
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
                 <li><a href="{% url 'search-form'%}">Search</a></li>
                 <li><a href="{% url 'login'%}">Log In</a></li>
@@ -23,45 +23,25 @@
         </nav>
         <div id="cart-icon" onclick="showCart()">🛒</div>
     </header>
-    <main id="concertList"></main>
+    <main id="artistList"></main>
 
     <script>
-        // file in for csv using try-catch as that is best for error handling until we do proper error handling
-        async function fetchCSV() {
+        async function fetchArtistsFromDjango() {
             try {
-                const response = await fetch('/Database/ticket_tech_database.csv');
+                const response = await fetch('/get_artists/');
 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data. Status: ${response.status}`);
                 }
 
-                const text = await response.text();
-                const data = text.split('\n').map(row => row.split(','));
-
-                // assume headers in csv
-                const headers = data[0];
-                const concertData = data.slice(1).map(row => {
-                    const concert = {};
-                    headers.forEach((header, index) => {
-                        concert[header] = row[index];
-                    });
-                    return concert;
-                });
-
-                return concertData;
+                return await response.json();
             } catch (error) {
                 console.error(error);
-                return null; // Return null and throw error
+                return null;
             }
         }
 
-        // Function to generate HTML content for each concert
-        // for every artist name we just make a new funciton of this below:
-        // images/${artist.ArtistName.replace(/\s+/g, '-').toLowerCase()}.jpg 
-        // ^ does special image and string concatination, I stole this, as I could never derive this
-        // commented out the individual images as this is not nice and clean as we dont have that data yet so just put the old place holder in
-        //link image to gogle drive 
-        function generateConcertHTML(artist) {
+        function generateArtistHTML(artist) {
             return `
             <article>
                 <h1>
@@ -71,77 +51,33 @@
                 </h1>
                 <div>
                     <figure>
-                        <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
-                        <!--<img src="images/${artist.ArtistName.replace(/\s+/g, '-').toLowerCase()}.jpg" alt="${artist.ArtistName} Image"> -->
+                        <img src="${artist.ArtistImage}" alt="${artist.ArtistName} Image">
                     </figure>
                     <button class="see-more-button" onclick="location.href='Details.html?artist=${artist.ArtistName}'">See More Details</button>
                 </div>
             </article>`;
         }
 
-        // Function to filter out duplicate artists as we dont want 5 of each we will show their dates in the see more details page
-        function filterUniqueArtists(concertData) {
-            const uniqueArtists = [];
-            const seenArtists = new Set();
+        async function renderArtists() {
+            const artistListContainer = document.getElementById('artistList'); // Corrected the ID here
+            artistListContainer.innerHTML = ''; // Clear previous content
 
-            for (const concert of concertData) {
-                const artistName = concert.ArtistName;
+            const artistData = await fetchArtistsFromDjango();
 
-                if (!seenArtists.has(artistName)) {
-                    seenArtists.add(artistName);
-                    uniqueArtists.push(concert);
-                }
-            }
-
-            return uniqueArtists;
-        }
-
-        // Function to render concert data on the page I stole this as I have no clue 
-        async function renderConcerts() {
-            const concertListContainer = document.getElementById('concertList');
-            const concertData = await fetchCSV();
-
-            if (concertData) {
-                const uniqueArtists = filterUniqueArtists(concertData);
-
-                uniqueArtists.forEach(concert => {
-                    const concertHTML = generateConcertHTML(concert);
-                    concertListContainer.innerHTML += concertHTML;
+            if (artistData) {
+                artistData.forEach(artist => {
+                    const artistHTML = generateArtistHTML(artist);
+                    artistListContainer.innerHTML += artistHTML;
                 });
             } else {
-                // Handle the case when there is an error fetching the data tie this to error handling when we do so
-                concertListContainer.innerHTML = '<p>Error fetching data. Please try again later.</p>';
+                artistListContainer.innerHTML = '<p>Error fetching data. Please try again later.</p>';
             }
         }
-        // Testing function
-        async function fetchConcertData() {
-            // Simulated async function for fetching concert data, does nothing to our actual data
-            return [{
-                artist: "Artist 1",
-                venue: "Venue 1",
-                date: "2024-04-01"
-            }, {
-                artist: "Artist 2",
-                venue: "Venue 2",
-                date: "2024-04-02"
-            }, {
-                artist: "Artist 3",
-                venue: "Venue 3",
-                date: "2024-04-03"
-            }];
-        }
 
-        function renderConcerts(concerts) {
-            // Simulated rendering function
-            const concertList = document.getElementById('concertList');
-            concertList.innerHTML = concerts.map(concert => `<li>${concert.artist} - ${concert.venue}, ${concert.date}</li>`).join('');
-        }
-        // end of testing functions
-
-        // Call the function to render concerts when the page loads
+        // Call the function to render artists when the page loads
         window.onload = function() {
-            renderConcerts();
-            displayCartContent();
+            renderArtists();
+            displayCartContent(); // Assuming this function is defined elsewhere
         };
     </script>
 </body>

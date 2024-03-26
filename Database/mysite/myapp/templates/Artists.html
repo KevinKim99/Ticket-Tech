@@ -1,21 +1,83 @@
-<!-- TODO format correctly -->
-{% extends "base.html" %} {% block content %}
-<h1> Artists </h1>
-<table>
-    <thead>
-        <tr>
-            <th>Artist</th>
-            <th>Artist Image</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Artist.ArtistName</td>
-            <td>Artist.ArtistImage</td>
-        </tr>
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/Trending-Style.css' %}">
+</head>
 
-{% endblock %}
+<body>
+    <header>
+        <h1>Ticket-Tech</h1>
+        <nav>
+            <ul>
+                <!-- Update these links accordingly -->
+                <li><a href="{% url 'concerts' %}">Concerts</a></li>
+                <li><a href="{% url 'search-form'%}">Search</a></li>
+                <li><a href="{% url 'login'%}">Log In</a></li>
+                <li><a href="{% url 'signup'%}">Sign Up</a></li>
+            </ul>
+        </nav>
+        <div id="cart-icon" onclick="showCart()">🛒</div>
+    </header>
+    <main>
+        <h1>Artists</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Artist Image</th>
+                </tr>
+            </thead>
+            <tbody id="artistTableBody">
+                <!-- Table body will be populated dynamically -->
+            </tbody>
+        </table>
+    </main>
 
+    <script>
+        async function fetchArtistsFromDjango() {
+            try {
+                const response = await fetch('/get_artists/');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+
+        async function renderArtists() {
+            const artistTableBody = document.getElementById('artistTableBody');
+            artistTableBody.innerHTML = ''; // Clear previous content
+
+            const artistData = await fetchArtistsFromDjango();
+
+            if (artistData) {
+                artistData.forEach(artist => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${artist.ArtistName}</td>
+                        <td><img src="${artist.ArtistImage}" alt="${artist.ArtistName} Image"></td>
+                    `;
+                    artistTableBody.appendChild(row);
+                });
+            } else {
+                const errorRow = document.createElement('tr');
+                errorRow.innerHTML = '<td colspan="2">Error fetching data. Please try again later.</td>';
+                artistTableBody.appendChild(errorRow);
+            }
+        }
+
+        // Call the function to render artists when the page loads
+        window.onload = function() {
+            renderArtists();
+        };
+    </script>
+</body>
+
+</html>
