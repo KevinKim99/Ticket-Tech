@@ -102,6 +102,3 @@ def removeConcert(concert_id):
     # Delete the concert
     concert.delete()
     return True
-
-
-
