@@ -1,4 +1,0 @@
-Public class DatabseTest {
-
-    
-}
