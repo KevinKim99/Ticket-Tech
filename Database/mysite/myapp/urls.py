@@ -12,7 +12,8 @@ urlpatterns = [
     path('search-results/', views.searchresults_view, name = 'search-results'),
     path('signup/', views.signup_view, name = 'signup'),
     path('userPage/', views.userPage_view, name = 'userPage'),
-    path("artists/", views.artists, name = "Artists")
+    path("artists/", views.artists, name = "Artists"),
+    path('get_artists/', views.get_artists, name='get_artists')
     
 ]
 

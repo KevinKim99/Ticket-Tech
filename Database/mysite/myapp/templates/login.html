@@ -30,7 +30,7 @@
             <h2>Log In</h2>
             <!-- Redirect to registration page if needed -->
             <p>Don't have an account? <a href="{% url 'signup'%}">Register here</a>.</p>
-            <form id="loginForm" action="{% url 'login' %}" method="post">
+            <form id="loginForm" action="{% url 'userPage' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <label for="username">Username:</label>

@@ -1,4 +1,4 @@
-Public class DatabseTest {
+public class DatabaseTest {
 
     
 }

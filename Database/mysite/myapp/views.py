@@ -11,6 +11,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+
 
 
 
@@ -107,6 +109,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from .models import client
 
+def signup_view(request):
+    # Handle signup logic here
+    return render(request, 'signup.html')
+
 def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -115,8 +121,12 @@ def signup(request):
         # Create a new Client object and save it to the database
         new_client = client(name=username, email=email, password=password)
         new_client.save()
-        return redirect('login')  # Redirect to the login page after signup
+        return redirect('login_view')  # Redirect to the login page after signup
     return render(request, 'signup.html')
+
+def login_view(request):
+    # Handle login logic here
+    return render(request, 'login.html')
 
 def login(request):
     if request.method == 'POST':
@@ -132,14 +142,22 @@ def login(request):
             return render(request, 'login.html', {'error_message': 'Invalid email or password'})
     return render(request, 'login.html')
 
-def login_view(request):
-    # Handle login logic here
-    return render(request, 'login.html')
 
-
-def login_view(request):
-    # Handle login logic here
-    return render(request, 'login.html')
+def get_artists(request):
+    try:
+        # Fetch all artists from the database
+        artists = Artists.objects.all().values('ArtistName', 'ArtistImage')
+        return JsonResponse(list(artists), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+def addArtist(ArtistId, ArtistName, ArtistImage):
+    artist = Artists(ArtistId=ArtistId, ArtistName=ArtistName, ArtistImage=ArtistImage)
+    artist.save()
+    
+def concerts_view(request):
+    concerts = Concerts.objects.all()
+    artists = Artists.objects.all()
+    return render(request, 'Concerts.html', {'concerts': concerts, 'artists': artists})
 
 #TODO Add all artists and concerts
 addArtist(3, "The Funky Monkeys", "https://drive.google.com/file/d/11AxDiz6NpGn4X60yPmuJMe85alfaS-LW/view?usp=sharing")
