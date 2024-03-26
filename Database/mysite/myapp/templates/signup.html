@@ -15,7 +15,7 @@
         <h1>Ticket-Tech</h1>
         <nav>
             <ul>
-                <!-- always update these when you make a new header, do for all pages-->
+                <!-- Update these links accordingly -->
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
                 <li><a href="{% url 'search-form'%}">Search</a></li>
                 <li><a href="{% url 'login'%}">Log In</a></li>
@@ -27,24 +27,22 @@
 
     <main>
         <div class="container">
-            <!-- onsubmit means when the form is complete we send the data to validateForm method-->
-            <form id="signupForm" action="#" onsubmit="return validateForm()">
-                <h2>Ticket Tech Registration </h2>
-                <!--link to login if you have an account-->
+            <form method="post">
+                {% csrf_token %}
+                <h2>Ticket Tech Registration</h2>
                 <p>Already have an account? <a href="{% url 'login'%}">Log in here</a>.</p>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 <span id="usernameError" class="error-message"></span>
 
-                <!--E-mail-->
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 <span id="emailError" class="error-message"></span>
-                <!--Password, 1st box-->
+
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
                 <span id="passwordError" class="error-message"></span>
-                <!--Password, 2nd box-->
+
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
                 <span id="confirmPasswordError" class="error-message"></span>
@@ -53,17 +51,17 @@
             </form>
             <div id="successMessage">Your account has been successfully validated! Page Will Redirect Within 20 Seconds.</div>
         </div>
-
     </main>
+    
     <script>
+        // Validation logic for sign up form
         function validateForm() {
             event.preventDefault();
-            /*Validation for sign up Simple getters*/
             var username = document.getElementById("username").value;
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
             var confirmPassword = document.getElementById("confirmPassword").value;
-            /*Error thower*/
+            
             var usernameError = document.getElementById("usernameError");
             var emailError = document.getElementById("emailError");
             var passwordError = document.getElementById("passwordError");
@@ -76,46 +74,43 @@
 
             var isValid = true;
 
-            //Username Error Msg / checker
+            // Username validation
             if (username.trim() === "") {
                 usernameError.innerHTML = "Username is required!";
                 isValid = false;
             }
-            //email Error Msg / checker
+
+            // Email validation
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 emailError.innerHTML = "Enter a valid email!";
                 isValid = false;
             }
-            //password Error Msg / checker
+
+            // Password validation
             if (password.length < 8) {
-                passwordError.innerHTML = "Password Must be at least 8 characters long!";
+                passwordError.innerHTML = "Password must be at least 8 characters long!";
                 isValid = false;
             }
-            //ensure password and confim are the same
+
+            // Confirm password validation
             if (confirmPassword !== password) {
-                confirmPasswordError.innerHTML = "passwords do not match!";
+                confirmPasswordError.innerHTML = "Passwords do not match!";
                 isValid = false;
             }
-            //user feedback for account validation
+
             if (isValid) {
-                //alert("Account Successfuly Validated");
                 saveUserInformation(username, email, password);
-
-                // Print user data to console
-                //**!!! get rid of before final submission or comment it out as this is bad for security !!!**
-                console.log("User Data:", {
-                    username,
-                    email,
-                    password
-                });
-
                 showSuccessMessage();
             }
+
             return isValid;
         }
-        // Function to save user information to localStorage, this will change when we figure out db stuff as this only works client side not server side
+
+        // Function to save user information
         function saveUserInformation(username, email, password) {
+            // Here you would typically make a request to your backend to save the user information
+            // For now, you can use this function to demonstrate saving data locally
             var userData = JSON.parse(localStorage.getItem("userData")) || [];
 
             userData.push({
@@ -126,16 +121,14 @@
 
             localStorage.setItem("userData", JSON.stringify(userData));
         }
+
         // Function to display success message and redirect to login page
         function showSuccessMessage() {
             var successMessage = document.getElementById("successMessage");
-            successMessage
-            .style.display = "block";
+            successMessage.style.display = "block";
+
             setTimeout(function() {
                 successMessage.style.display = "none";
-
-                // Redirect to the login page
-                console.log("Redirecting to login page");
                 window.location.href = "{% url 'login'%}";
             }, 2000);
         }
@@ -143,3 +136,4 @@
 </body>
 
 </html>
+
