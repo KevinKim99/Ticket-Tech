@@ -6,9 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'CSS/Signup-Style.css' %}">
-    <script src="javaScript/cart.js" defer></script>
+    <script src="{% static 'javaScript/cart.js' %}" defer></script>
     <title>Sign Up</title>
-
 </head>
 
 <body>
@@ -130,7 +129,8 @@
         // Function to display success message and redirect to login page
         function showSuccessMessage() {
             var successMessage = document.getElementById("successMessage");
-            successMessage.style.display = "block";
+            successMessage
+            .style.display = "block";
             setTimeout(function() {
                 successMessage.style.display = "none";
 

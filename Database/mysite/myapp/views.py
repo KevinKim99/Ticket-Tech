@@ -6,6 +6,8 @@ from .models import Artists
 from .models import client
 from .models import payment
 from .models import myTickets
+from django.shortcuts import render, redirect
+from .forms import SignUpForm
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -102,6 +104,16 @@ def removeConcert(concert_id):
     # Delete the concert
     concert.delete()
     return True
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login.html')  # Redirect to the login page after successful signup
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 
