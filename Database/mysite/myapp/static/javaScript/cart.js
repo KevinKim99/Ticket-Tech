@@ -6,7 +6,9 @@ function addToCart(artist, price) {
     const item = { artist, price };
     cartItems.push(item);
     updateCartIcon();
+    displayCartContent(); // Call the function to display cart content
 }
+
 
 // Function to show the cart
 function showCart() {
@@ -30,7 +32,7 @@ function updateCartIcon() {
 
     // event listener for cart click function
     cartIcon.addEventListener('click', function() {
-        window.location.href = 'cart.html';
+        window.location.href = '/cart.html';
     });
 }
 

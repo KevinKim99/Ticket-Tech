@@ -24,60 +24,39 @@
     </header>
     <main>
         <h1>Shopping Cart</h1>
-        <!-- create fake conents in here-->
+        <div id="cartContent">
+            <!-- Display cart items here -->
+        </div>
     </main>
-    <main id="cartContent">
-        <!-- Display cart items here Dont Mess with it -->
-    </main>
+
+    <script>
+        // Function to display cart items
+        function displayCartItems() {
+            const cartContent = document.getElementById('cartContent');
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            if (cartItems.length > 0) {
+                // Clear previous contents
+                cartContent.innerHTML = '';
+
+                // Display each item in the cart
+                cartItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.textContent = `${item.name} - Quantity: ${item.quantity}, Price: ${item.price}`;
+                    cartContent.appendChild(itemElement);
+                });
+            } else {
+                // If cart is empty, display a message
+                cartContent.textContent = 'Your cart is empty.';
+            }
+        }
+
+        // Run this function when the page loads
+        window.onload = function () {
+            displayCartItems();
+        };
+    </script>
 
 </body>
-<script>
-    // Function to display cart items
-    function displayCartItems() {
-        const cartContent = document.getElementById('cart-content');
-        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-        if (cartItems.length > 0) {
-            // Display each item in the cart
-            cartItems.forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.textContent = `${item.name} - Quantity: ${item.quantity}, Price: ${item.price}`;
-                cartContent.appendChild(itemElement);
-            });
-        } else {
-            // If cart is empty, display a message
-            cartContent.textContent = 'Your cart is empty.';
-        }
-    }
-
-    // Run this function when the page loads
-    window.onload = function() {
-        // Add a test case for an empty cart
-        localStorage.removeItem('cartItems');
-        displayCartItems();
-
-        // Add a test case for a cart with items
-        const fakeItem = {
-            name: 'Fake Item',
-            price: 10.99,
-            quantity: 2
-        };
-
-        const cartItems = [fakeItem];
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        displayCartItems();
-
-        // Add a test case for displaying cart content
-        const anotherFakeItem = {
-            name: 'Another Fake Item',
-            price: 5.99,
-            quantity: 3
-        };
-
-        cartItems.push(anotherFakeItem);
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        displayCartItems();
-    };
-</script>
 
 </html>

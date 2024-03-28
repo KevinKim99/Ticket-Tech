@@ -164,12 +164,12 @@ from django.shortcuts import render, get_object_or_404
 from .models import Artists
 
 def artist_details_view(request, artist_name):
-    # Retrieve the artist details from the database based on the artist's name
+  # get artists name from db
     artist = get_object_or_404(Artists, ArtistName=artist_name)
     
-    # Retrieve concert details associated with the artist
+    # essentially our sql join 
     concerts = Concerts.objects.filter(ArtistId=artist.ArtistId)
-    
+    # render this shit, details table and concerts table
     return render(request, 'details.html', {'artist': artist, 'concerts': concerts})
 
 #TODO Add all artists and concerts
