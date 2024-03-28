@@ -29,4 +29,20 @@ function testDisplay() {
     }
 }
 
+const { fetchClientData } = require('./code/userPage.html');
+
+test('Testing user name is correct'), async() => {
+    const client = await fetchClientData();
+    expect(client[0] == "tester")
+}
+
+test('fetchClientData returns client information', async() => {
+    const client = await fetchClientData();
+    expect(client[0]).toHaveProperty('tester');
+    expect(client[0]).toHaveProperty('tester@gmail.com');
+    expect(client[0]).toHaveProperty('testerpassword');
+})
+
+
+
 testDisplay()
