@@ -159,6 +159,19 @@ def concerts_view(request):
     artists = Artists.objects.all()
     return render(request, 'Concerts.html', {'concerts': concerts, 'artists': artists})
 
+
+from django.shortcuts import render, get_object_or_404
+from .models import Artists
+
+def artist_details_view(request, artist_name):
+    # Retrieve the artist details from the database based on the artist's name
+    artist = get_object_or_404(Artists, ArtistName=artist_name)
+    
+    # Retrieve concert details associated with the artist
+    concerts = Concerts.objects.filter(ArtistId=artist.ArtistId)
+    
+    return render(request, 'details.html', {'artist': artist, 'concerts': concerts})
+
 #TODO Add all artists and concerts
 addArtist(3, "The Funky Monkeys", "https://drive.google.com/file/d/11AxDiz6NpGn4X60yPmuJMe85alfaS-LW/view?usp=sharing")
 

@@ -53,10 +53,14 @@
                     <figure>
                         <img src="${artist.ArtistImage}" alt="${artist.ArtistName} Image">
                     </figure>
-                    <button class="see-more-button" onclick="location.href='Details.html?artist=${artist.ArtistName}'">See More Details</button>
+                    <button class="see-more-button" onclick="location.href='/concerts/details/${artist.ArtistName}/'">See More Details</button>
                 </div>
             </article>`;
         }
+        
+        
+        
+        //<button class="see-more-button" onclick="location.href='Details?artist=${artist.ArtistName}'">See More Details</button>
 
         async function renderArtists() {
             const artistListContainer = document.getElementById('artistList'); // Corrected the ID here
