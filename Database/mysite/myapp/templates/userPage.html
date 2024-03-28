@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <!-- <link rel="stylesheet" href="fontawesome/css/all.css"> -->
     <link rel="stylesheet" href="{% static 'CSS/User-page.css' %}">
+
+    <script src="{% static 'javaScript/userPage.js' %}" defer></script>
+
     <title>User Account</title>
 </head>
 
@@ -63,17 +66,17 @@
                     <h1>My Profile</h1>
                     <div>
                         <h2>Username</h2>
-                        <input type="text" value="qwerty1111" class="input" v-model="user.username">
+                        <input id = profileName type="text" value="qwerty1111" class="input" v-model="user.username">
                     </div>
         
                     <div>
                         <h2>Email</h2>
-                        <input type="email" value="helloworld@gmail.com" class="input" v-model="user.email">
+                        <input id = profileEmail  value="helloworld@gmail.com" class="input" v-model="user.email">
                     </div>
         
                     <div>
                         <h2>Password</h2>
-                        <input type="password" value="12341234" class="input" v-model="user.password">
+                        <input id = profilePassword type="password" value="" class="input" v-model="user.password">
                     </div>
                 </div>
         
@@ -81,17 +84,17 @@
                     <h1>Payment Information</h1>
                     <div>
                         <h2>Payment Method</h2>
-                        <input type="text" value="Master Card - John" class="input" v-model="payment.method">
+                        <input id = "paymentMethod" type="text" value="Master Card - John" class="input" v-model="payment.method">
                     </div>
         
                     <div>
                         <h2>Billing Address</h2>
-                        <input type="text" value="3333 University Way, Kelowna" class="input" v-model="payment.address">
+                        <input id = "paymentAddress" type="text" value="3333 University Way, Kelowna" class="input" v-model="payment.address">
                     </div>
         
                     <div>
                         <h2>Postal Code</h2>
-                        <input type="text" value="V1V 1V7" class="input" v-model="payment.postalCode">
+                        <input id = "paymentPostalCode" type="text" value="V1V 1V7" class="input" v-model="payment.postalCode">
                     </div>
                 </div>
                 <button class="btn">Update</button>
@@ -102,6 +105,69 @@
         </div>
         
     </div>
+
+    <script>
+        async function fetchClientFromDjango(){
+            try {
+                const response = await fetch('/get_client/');
+
+                if (!response.ok){
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+
+        async function fetchPaymentFromDjango(){
+            try {
+                const response = await fetch('/get_payment/');
+
+                if (!response.ok){
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+
+        async function renderClient(){ 
+            const clientData = await fetchClientFromDjango();
+
+            const userName = document.getElementById('profileName');
+            const userEmail = document.getElementById('profileEmail');
+            const userPassword = document.getElementById('profilePassword');
+
+            userName.value = clientData[0].name;
+            userEmail.value = clientData[0].email;
+            userPassword.value = clientData[0].password;
+        }
+
+        async function renderPayment(){ 
+            const paymentData = await fetchPaymentFromDjango();
+
+            const paymentType = document.getElementById('paymentMethod');
+            const paymentAddress = document.getElementById('paymentAddress');
+            const paymentPostalCode = document.getElementById('paymentPostalCode');
+
+            paymentType.value = paymentData[0].paymentType;
+            paymentAddress.value = paymentData[0].address;
+            paymentPostalCode.value = paymentData[0].postalCode;
+            console.log(paymentData)
+        }
+        window.onload = function(){
+            renderClient();
+            renderPayment();
+        }
+        
+
+    </script>
     
      
     
