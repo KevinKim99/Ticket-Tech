@@ -15,7 +15,8 @@ urlpatterns = [
     path("artists/", views.artists, name = "Artists"),
     path('get_artists/', views.get_artists, name='get_artists'),
     path('get_client/', views.get_client, name='get_client'),
-    path('get_payment/', views.get_payment, name='get_payment')
+    path('get_payment/', views.get_payment, name='get_payment'),
+    path('concerts/Details.html/', views.Details_view, name = 'Details')
 ]
 
 

@@ -146,8 +146,16 @@ def login(request):
 def get_artists(request):
     try:
         # Fetch all artists from the database
-        artists = Artists.objects.all().values('ArtistName', 'ArtistImage')
+        artists = Artists.objects.all().values('ArtistName', 'ArtistImage','ArtistId')
         return JsonResponse(list(artists), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+def get_concerts(request):
+    try:
+        # Fetch all concerts from the database
+        concerts = Concerts.objects.all().values('ConcertId', 'ArtistId','ConcertDate','Venue','City','TicketQuantity','TicketPrice')
+        return JsonResponse(list(concerts), safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
     
