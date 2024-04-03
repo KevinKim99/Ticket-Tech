@@ -150,6 +150,21 @@ def get_artists(request):
         return JsonResponse(list(artists), safe=False)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+def get_client(request):
+    try:
+        clients = client.objects.all().values('name','email','password')
+        return JsonResponse(list(clients), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+def get_payment(request):
+    try:
+        payments = payment.objects.all().values('paymentType','address','postalCode')
+        return JsonResponse(list(payments), safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
 def addArtist(ArtistId, ArtistName, ArtistImage):
     artist = Artists(ArtistId=ArtistId, ArtistName=ArtistName, ArtistImage=ArtistImage)
     artist.save()
