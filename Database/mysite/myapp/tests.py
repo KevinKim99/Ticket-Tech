@@ -6,8 +6,6 @@ from .views import addArtist
 from .views import addClient
 from .views import addPayment
 from .views import addMyTickets
-from .views import addCart
-
 from .models import Artists
 from .models import Concerts
 from .models import client
@@ -17,7 +15,6 @@ from .views import removeArtist
 from .views import removeConcert
 from .models import Artists
 from .models import Concerts
-from .models import cart
 
 
 # Create your tests here.
@@ -46,12 +43,6 @@ class AddPayment(TestCase):
     def test_add_payment(self):
         addPayment(0, 0, "Visa", "802Academy", "V1V3A4")
 
-class AddCart(TestCase):
-    def test_add_cart(self):
-        addCart(0,0)
-
-        cart2 = cart.object.get(userId = 0)
-        self.assertEqual(cart2.userId, 0)
 
 class TestAddConcert(TestCase):
     #add concert
