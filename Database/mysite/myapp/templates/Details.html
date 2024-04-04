@@ -92,16 +92,18 @@ function generateDetailsHtml(artist,concert){
 }
 
 async function renderDetails(){
+    //Linking the generated HTML file to <main>
     const DetailsPage = document.getElementById('Details');
-
+    //initalizing information
     const artistData = await fetchArtistInfo();
     const concertData = await fetchConcertInfo();
 
     artistData.forEach(artist => {
+        //Checking artist name from DB with URL data
         if(artist.ArtistName == parseURLData()){
             const ArtistId = artist.ArtistId;
             concertData.forEach(concert => {
-                console.log(ArtistId);
+                //Checking if the concert's artist is the same as the one in the page URL. 
                 if(concert.ArtistId == ArtistId){
                     const detailsHTML = generateDetailsHtml(artist,concert);
                     DetailsPage.innerHTML += detailsHTML;
@@ -110,11 +112,6 @@ async function renderDetails(){
         }
         
     });
-
-    // concertData.forEach(concert => {
-    //    console.log(concert.ArtistId);
-        
-    // });
 }
 </script>
 
