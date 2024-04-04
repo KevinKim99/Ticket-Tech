@@ -85,7 +85,7 @@ function generateDetailsHtml(artist,concert){
                 </p2>
             </div>
             <div>
-                <button class="see-more-button" onclick="addToCart(${artist.ArtistName,concert.TicketPrice})">Add to Cart</button>
+                <button class="see-more-button" onclick="addToCart('${artist.ArtistName}','${concert.TicketPrice}')">Add to Cart</button>
             </div>
         </h1>
     </article>`;
