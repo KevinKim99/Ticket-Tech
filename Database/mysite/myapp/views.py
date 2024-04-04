@@ -1,26 +1,19 @@
 from django.shortcuts import render, HttpResponse
 from .models import TodoItem
-from .models import Concerts
 from .models import Artists
 
-from .models import client
-from .models import payment
-from .models import myTickets
-from .models import cart
-
+from .models import Concerts, Artists, client, payment, myTickets
 from .forms import SignUpForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
 
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
-
-
-
-
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import User
 
 # Create your views here.
-
 
 def home(request):
     return render(request, "home.html")
@@ -46,7 +39,6 @@ def signup_view(request):
 def userPage_view(request):
     return render(request, 'userPage.html')
 
-
 def todos(request):
     items = TodoItem.objects.all
     return render(request, "todos.html", {"todos": items})
@@ -59,8 +51,6 @@ def artists(request):
     items = Artists.objects.all
     return render(request, "Artists.html", {"artistNames": items})
 
-
-
 def addConcert(ConcertId, ArtistId, ConcertDate, Venue, City, TicketQuantity, TicketPrice):
     concert = Concerts(ConcertId = ConcertId, ArtistId = ArtistId, ConcertDate = ConcertDate, Venue = Venue, City = City, TicketQuantity = TicketQuantity, TicketPrice = TicketPrice)
     concert.save()
@@ -68,7 +58,6 @@ def addConcert(ConcertId, ArtistId, ConcertDate, Venue, City, TicketQuantity, Ti
 def addArtist(ArtistId, ArtistName, ArtistImage):
     artist = Artists(ArtistId = ArtistId, ArtistName = ArtistName, ArtistImage = ArtistImage)
     artist.save()
-
 
 def addClient(id, name, email, password):
     client2 = client(id = id, name = name, email = email, password = password)
@@ -93,11 +82,9 @@ def removeArtist(artist_id):
     except ObjectDoesNotExist:
         # If the artist does not exist, return False
         return False
-    
     # Delete the artist
     artist.delete()
     return True
-
 
 def removeConcert(concert_id):
     try:
@@ -111,43 +98,32 @@ def removeConcert(concert_id):
     concert.delete()
     return True
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password
-from .models import client
-
 def signup_view(request):
-    # Handle signup logic here
-    return render(request, 'signup.html')
-
-def signup(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        # Create a new Client object and save it to the database
-        new_client = client(name=username, email=email, password=password)
+        # Hash the password
+        hashed_password = make_password(password)
+        # Create a new client object with hashed password and save it to the database
+        new_client = client(name=username, email=email, password=hashed_password)
         new_client.save()
-        return redirect('login_view')  # Redirect to the login page after signup
+        return redirect('login')  # Redirect to the login page after signup
     return render(request, 'signup.html')
 
 def login_view(request):
-    # Handle login logic here
-    return render(request, 'login.html')
-
-def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        # Check if the provided email and password match any client in the database
-        try:
-            matched_client = client.objects.get(email=email, password=password)
-            # Perform login logic here, such as setting session variables
-            return redirect('dashboard')  # Redirect to the dashboard after successful login
-        except client.DoesNotExist:
-            # Handle invalid credentials, e.g., display an error message
-            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
-    return render(request, 'login.html')
-
+        # Authenticate user
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            # User authenticated, log in user
+            login(request, user)
+            return redirect('home')  # Redirect to home page after login
+        else:
+            # Authentication failed, handle error
+            return render(request, 'login.html', {'error_message': 'Invalid credentials'})
+    else:
+        return render(request, 'login.html')
 
 def get_artists(request):
     try:
@@ -179,3 +155,7 @@ def concerts_view(request):
     concerts = Concerts.objects.all()
     artists = Artists.objects.all()
     return render(request, 'Concerts.html', {'concerts': concerts, 'artists': artists})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
