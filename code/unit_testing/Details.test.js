@@ -1,7 +1,7 @@
-const { fetchConcertInfo, fecthArtistInfo } = require('./Details');
+const { fetchConcertInfo, fetchArtistInfo } = require('./Details');
 
 test('Artist name is correct'), async() => {
-    const artists = await fecthArtistInfo();
+    const artists = await fetchArtistInfo();
     expect(artists[0].ArtistName == "The Electric Tigers");
 }
 
