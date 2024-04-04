@@ -108,17 +108,15 @@ def signup_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        # Authenticate the user
-        user = authenticate(request, email=email, password=password)
+        # Authenticate user
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is not None:
-            # Login the user
+            # User authenticated, log in user
             login(request, user)
-            return redirect('userPage_view')  # Redirect to the user page after successful login
+            return redirect('home')  # Redirect to home page after login
         else:
-            # Authentication failed
-            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+            # Authentication failed, handle error
+            return render(request, 'login.html', {'error_message': 'Invalid credentials'})
     else:
         return render(request, 'login.html')
 
@@ -155,4 +153,4 @@ def concerts_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('concerts')  # Redirect to the home page after logout
+    return redirect('home')
