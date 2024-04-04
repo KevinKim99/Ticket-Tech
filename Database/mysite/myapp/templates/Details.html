@@ -65,7 +65,7 @@ async function fetchConcertInfo(){
         
 }
 
-function generateDetailsHtml(artist){
+function generateDetailsHtml(artist,concert){
     return`
     <article>
         <h1>
@@ -73,9 +73,10 @@ function generateDetailsHtml(artist){
                 <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
             </figure>
             <a rel="author">${artist.ArtistName}</a>
-            <p>Location: Santa Monica Bay </p>
-            <p>Date: 3:00 PM 23/08/24</p>
-            <p>Price: $250</p>
+            <p>Location: ${concert.Venue}, ${concert.City} </p>
+            <p>Date: ${concert.ConcertDate}</p>
+            <p>Price: ${concert.TicketPrice}</p>
+            <p>Quantity: ${concert.TicketQuantity}</p>
             <div>
                 <p2>
                     <br> Description: The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over
@@ -84,7 +85,7 @@ function generateDetailsHtml(artist){
                 </p2>
             </div>
             <div>
-                <button class="see-more-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
+                <button class="see-more-button" onclick="addToCart('${artist.ArtistName}'+,'${concert.TicketPrice}')">Add to Cart</button>
             </div>
         </h1>
     </article>`;
@@ -98,9 +99,20 @@ async function renderDetails(){
 
     artistData.forEach(artist => {
         if(artist.ArtistName == parseURLData()){
+            const ArtistId = artist.ArtistId;
+            concertData.forEach(concert => {
+                if(concert.ConcertId == ArtistId){
+                    const detailsHTML = generateDetailsHtml(artist,concert);
+                    DetailsPage.innerHTML += detailsHTML;
+                }
+            });
             console.log(artist.ArtistName);
-            DetailsPage.innerHTML += generateDetailsHtml(artist);
         }
+        
+    });
+
+    concertData.forEach(concert => {
+       console.log(concert.ArtistId);
         
     });
 }

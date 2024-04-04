@@ -14,6 +14,7 @@ urlpatterns = [
     path('userPage/', views.userPage_view, name = 'userPage'),
     path("artists/", views.artists, name = "Artists"),
     path('get_artists/', views.get_artists, name='get_artists'),
+    path('get_concerts/', views.get_concerts, name='get_concerts'),
     path('get_client/', views.get_client, name='get_client'),
     path('get_payment/', views.get_payment, name='get_payment'),
     path('concerts/Details.html/', views.Details_view, name = 'Details')
