@@ -76,8 +76,8 @@ def addPayment(id, userId, paymentType, address, postalCode):
     payment2 = payment(id = id, userId = userId, paymentType = paymentType, address = address, postalCode = postalCode)
     payment2.save()
 
-def addMyTickets(id, userId, concertId):
-    myTicket2 = myTickets(id = id, userId = userId, concertId = concertId)
+def addMyTickets(id, userId, concertId, ticketPrice, ticketSection):
+    myTicket2 = myTickets(id = id, userId = userId, concertId = concertId, ticketPrice = ticketPrice, ticketSection= ticketSection)
     myTicket2.save()
     
 def removeArtist(artist_id):
