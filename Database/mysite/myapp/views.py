@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from .models import TodoItem
 from .models import Artists
-from .models import Concerts, Artists, client, payment, myTickets
+from .models import Concerts, Artists, client, payment, myTickets, cart
 from .forms import SignUpForm
 from django.shortcuts import render, redirect
 
