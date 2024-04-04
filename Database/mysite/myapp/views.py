@@ -181,8 +181,3 @@ def concerts_view(request):
     concerts = Concerts.objects.all()
     artists = Artists.objects.all()
     return render(request, 'Concerts.html', {'concerts': concerts, 'artists': artists})
-
-#TODO Add all artists and concerts
-addArtist(3, "The Funky Monkeys", "https://drive.google.com/file/d/11AxDiz6NpGn4X60yPmuJMe85alfaS-LW/view?usp=sharing")
-
-
