@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'CSS/Details-Style.css' %}">
-    <script src="javaScript/cart.js" defer></script>
+    <script src="{% static 'javaScript/cart.js' %}" defer></script>
 </head>
 
 <body>
@@ -85,7 +85,7 @@ function generateDetailsHtml(artist,concert){
                 </p2>
             </div>
             <div>
-                <button class="see-more-button" onclick="addToCart('${artist.ArtistName}'+,'${concert.TicketPrice}')">Add to Cart</button>
+                <button class="see-more-button" onclick="addToCart(${artist.ArtistName}+,${concert.TicketPrice})">Add to Cart</button>
             </div>
         </h1>
     </article>`;
