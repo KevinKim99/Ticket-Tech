@@ -40,6 +40,12 @@ CREATE TABLE myTickets (
     FOREIGN KEY (concertId) REFERENCES Concerts(ConcertId)
     FOREIGN KEY (userId) REFERENCES client(id)
 );
+CREATE TABLE cart(
+    id userId INTEGER,
+    concertId INTEGER,
+    FOREIGN KEY (userId) REFERENCES client(userId)
+    FOREIGN KEY (concertId) REFERENCES Concerts(ConcertId)
+)
 
 -- Insert data into Artists table
 INSERT INTO Artists (ArtistId, ArtistName, ArtistImage)
