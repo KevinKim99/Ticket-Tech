@@ -101,20 +101,20 @@ async function renderDetails(){
         if(artist.ArtistName == parseURLData()){
             const ArtistId = artist.ArtistId;
             concertData.forEach(concert => {
-                if(concert.ConcertId == ArtistId){
+                console.log(ArtistId);
+                if(concert.ArtistId == ArtistId){
                     const detailsHTML = generateDetailsHtml(artist,concert);
                     DetailsPage.innerHTML += detailsHTML;
                 }
             });
-            console.log(artist.ArtistName);
         }
         
     });
 
-    concertData.forEach(concert => {
-       console.log(concert.ArtistId);
+    // concertData.forEach(concert => {
+    //    console.log(concert.ArtistId);
         
-    });
+    // });
 }
 </script>
 
