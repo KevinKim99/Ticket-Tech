@@ -6,6 +6,8 @@ from .models import Artists
 from .models import client
 from .models import payment
 from .models import myTickets
+
+
 from .forms import SignUpForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
