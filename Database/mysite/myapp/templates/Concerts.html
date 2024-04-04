@@ -35,19 +35,27 @@
         async function fetchArtistsFromDjango() {
             try {
                 const response = await fetch('/get_artists/');
-
+    
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data. Status: ${response.status}`);
                 }
-
+    
                 return await response.json();
             } catch (error) {
                 console.error(error);
                 return null;
             }
         }
-
+    
         function generateArtistHTML(artist) {
+            const imageId = extractImageId(artist.ArtistImage);
+            const thumbnailUrl = `https://drive.google.com/thumbnail?id=${imageId}`;
+            // sadly thumbnail is the only way to get these images to display, and this also is why the photo quality is absoplute crap 
+            //directLink = `https://drive.google.com/uc?id=${imageId}`;
+            //sharedLink = `https://drive.google.com/file/d/${imageId}/view?usp=sharing`;
+            // both ways above would show better quality images but sadly here we are. 
+
+
             return `
             <article>
                 <h1>
@@ -57,19 +65,19 @@
                 </h1>
                 <div>
                     <figure>
-                        <img src="${artist.ArtistImage}" alt="${artist.ArtistName} Image">
+                        <img src="${thumbnailUrl}" alt="${artist.ArtistName} Image"> 
                     </figure>
                     <button class="see-more-button" onclick="location.href='Details.html?artist=${artist.ArtistName}'">See More Details</button>
                 </div>
             </article>`;
         }
-
+    
         async function renderArtists() {
             const artistListContainer = document.getElementById('artistList'); // Corrected the ID here
             artistListContainer.innerHTML = ''; // Clear previous content
-
+    
             const artistData = await fetchArtistsFromDjango();
-
+    
             if (artistData) {
                 artistData.forEach(artist => {
                     const artistHTML = generateArtistHTML(artist);
@@ -79,11 +87,17 @@
                 artistListContainer.innerHTML = '<p>Error fetching data. Please try again later.</p>';
             }
         }
-
-        // Call the function to render artists when the page loads
+    
+        function extractImageId(imageUrl) {
+            const keyStartIndex = imageUrl.indexOf('/d/') + 3; // Index after "/d/ and before /view"
+            const keyEndIndex = imageUrl.indexOf('/view');  // link to where i found this out: https://stackoverflow.com/questions/15557392/how-do-i-display-images-from-google-drive-on-a-website#:~:text=Use%20the%20'Get%20Link'%20option,paste%20the%20link%20in%20there.
+            return imageUrl.substring(keyStartIndex, keyEndIndex); // extracts the wrapper stuff from the link taht is stored in the db
+        }
+    
+       
         window.onload = function() {
             renderArtists();
-            displayCartContent(); // Assuming this function is defined elsewhere
+            displayCartContent();
         };
     </script>
 </body>
