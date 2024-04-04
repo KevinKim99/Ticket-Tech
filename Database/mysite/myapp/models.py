@@ -40,6 +40,3 @@ class myTickets(models.Model):
     userId = models.IntegerField()
     concertId = models.IntegerField()
     
-class cart(models.Model):
-    userId = models.IntegerField()
-    concertId = models.IntegerField()
