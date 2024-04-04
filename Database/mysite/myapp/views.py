@@ -70,6 +70,10 @@ def addMyTickets(id, userId, concertId):
     myTicket2 = myTickets(id = id, userId = userId, concertId = concertId)
     myTicket2.save()
     
+def addCart(userId, concertId):
+    cart2 = cart(userId = userId, concertId = concertId)
+    cart2.save()
+    
 def removeArtist(artist_id):
     try:
         # Attempt to get the artist from the database
