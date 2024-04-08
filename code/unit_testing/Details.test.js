@@ -1,16 +1,17 @@
-const { fetchConcertData } = require('./code/Details.html');
+const { fetchConcertInfo, fetchArtistInfo } = require('./Details');
 
 test('Artist name is correct'), async() => {
-    const concerts = await fetchConcertData();
-    expect(concerts[0] == "Artist1");
+    const artists = await fetchArtistInfo();
+    expect(artists[0].ArtistName == "The Electric Tigers");
 }
 
 test('fetchConcertData returns the concert information', async() => {
-    const concerts = await fetchConcertData();
-    expect(concerts).toHaveLength(1);
-    expect(concerts[0]).toHaveProperty('artist');
-    expect(concerts[0]).toHaveProperty('venue');
-    expect(concerts[0]).toHaveProperty('date');
-    expect(concerts[0]).toHaveProperty('price');
-    expect(concerts[0]).toHaveProperty('quantity');
+    const concerts = await fetchConcertInfo();
+    expect(concerts[0]).toHaveProperty('ConcertId');
+    expect(concerts[0]).toHaveProperty('ArtistId');
+    expect(concerts[0]).toHaveProperty('ConcertDate');
+    expect(concerts[0]).toHaveProperty('Venue');
+    expect(concerts[0]).toHaveProperty('City');
+    expect(concerts[0]).toHaveProperty('TicketPrice');
+    expect(concerts[0]).toHaveProperty('Ticketquantity');
 });
