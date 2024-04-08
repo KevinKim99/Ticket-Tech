@@ -16,9 +16,11 @@ urlpatterns = [
     path('get_artists/', views.get_artists, name='get_artists'),
     path('get_concerts/', views.get_concerts, name='get_concerts'),
     path('get_client/', views.get_client, name='get_client'),
-    path('get_payment/', views.get_payment, name='get_payment'),
     path('concerts/Details.html/cart.html/', views.cart_view, name = 'cart'),
     path('concerts/Details.html/', views.Details_view, name = 'Details')
+    path('login/', views.login_view, name='login_view'),
+    path('logout/', views.logout_view, name='logout'),
+    path('get_payment/', views.get_payment, name='get_payment')
 ]
 
 
