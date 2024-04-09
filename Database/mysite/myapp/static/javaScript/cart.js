@@ -5,13 +5,13 @@ let cartItems = [];
 function addToCart(artist, price, concertId) {
     const item = { artist, price, concertId};
     cartItems.push(item);
-    localStorage.setItem(JSON.stringify('Cart',cartItems));
+    window.sessionStorage.setItem('Cart',JSON.stringify(cartItems));
     updateCartIcon();
 }
 
 // Function to show the cart
 function showCart() {
-    cartItems = JSON.parse('Cart');
+    cartItems = window.sessionStorage.getItem(JSON.parse(getItem('Cart')));
     if (cartItems.length > 0) {
         alert("Cart Items:\n" + cartItems.map(item => `${item.artist} - $${item.price}`).join('\n'));
     } else {
