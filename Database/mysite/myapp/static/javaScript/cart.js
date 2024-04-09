@@ -2,14 +2,16 @@
 let cartItems = [];
 
 // Function to add an item to the cart
-function addToCart(artist, price) {
-    const item = { artist, price };
+function addToCart(artist, price, concertId) {
+    const item = { artist, price, concertId};
     cartItems.push(item);
+    localStorage.setItem(JSON.stringify('Cart',cartItems));
     updateCartIcon();
 }
 
 // Function to show the cart
 function showCart() {
+    cartItems = JSON.parse('Cart');
     if (cartItems.length > 0) {
         alert("Cart Items:\n" + cartItems.map(item => `${item.artist} - $${item.price}`).join('\n'));
     } else {

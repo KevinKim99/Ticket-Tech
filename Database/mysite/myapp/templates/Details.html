@@ -70,12 +70,22 @@ async function fetchConcertInfo(){
         
 }
 
+function extractImageId(imageUrl) {
+            const keyStartIndex = imageUrl.indexOf('/d/') + 3; // Index after "/d/ and before /view"
+            const keyEndIndex = imageUrl.indexOf('/view');  // link to where i found this out: https://stackoverflow.com/questions/15557392/how-do-i-display-images-from-google-drive-on-a-website#:~:text=Use%20the%20'Get%20Link'%20option,paste%20the%20link%20in%20there.
+            return imageUrl.substring(keyStartIndex, keyEndIndex); // extracts the wrapper stuff from the link taht is stored in the db
+        }
+    
+
 function generateDetailsHtml(artist,concert){
+    const imageId = extractImageId(artist.ArtistImage);
+    const thumbnailUrl = `https://drive.google.com/thumbnail?id=${imageId}`;
+
     return`
     <article>
         <h1>
             <figure>
-                <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
+                <img src="${thumbnailUrl}" alt="${artist.ArtistName} Image"> 
             </figure>
             <a rel="author">${artist.ArtistName}</a>
             <p>Location: ${concert.Venue}, ${concert.City} </p>
@@ -90,7 +100,7 @@ function generateDetailsHtml(artist,concert){
                 </p2>
             </div>
             <div>
-                <button class="see-more-button" onclick="addToCart('${artist.ArtistName}','${concert.TicketPrice}')">Add to Cart</button>
+                <button class="see-more-button" onclick="addToCart('${artist.ArtistName}','${concert.TicketPrice}','${concert.ConcertId}')">Add to Cart</button>
             </div>
         </h1>
     </article>`;
