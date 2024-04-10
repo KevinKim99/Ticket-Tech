@@ -6,6 +6,7 @@ from .views import addArtist
 from .views import addClient
 from .views import addPayment
 from .views import addMyTickets
+from .views import addCart
 from .models import Artists
 from .models import Concerts
 from .models import client
@@ -15,6 +16,7 @@ from .views import removeArtist
 from .views import removeConcert
 from .models import Artists
 from .models import Concerts
+from .models import cart
 
 
 # Create your tests here.
@@ -43,6 +45,12 @@ class AddPayment(TestCase):
     def test_add_payment(self):
         addPayment(0, 0, "Visa", "802Academy", "V1V3A4")
 
+class AddCart(TestCase):
+    def test_add_cart(self):
+        addCart(0,0)
+
+        cart2 = cart.object.get(userId = 0)
+        self.assertEqual(cart2.userId, 0)
 
 class TestAddConcert(TestCase):
     #add concert
@@ -129,7 +137,7 @@ class TestRemoveConcert(TestCase):
 
 
 #to verify num of artists - Eric
-class ArtistTestCase(TestCase):
+class ArtistNumTestCase(TestCase):
     def setUp(self):
         addArtist(1, 'The Electric Tigers', "https://drive.google.com/file/d/1frS-3GGUeoOrFW6Vpk36Aup_1mCnHud1/view?usp=sharing")
         addArtist(2, 'Neon Dreamers', "https://drive.google.com/file/d/1b98JOTnkWdT04ljimUMrSYEUi151gvKU/view?usp=sharing")
@@ -169,3 +177,79 @@ class ArtistTestCase(TestCase):
         expected_count = 30
         self.assertEqual(unique_artists_count, expected_count, "There should be 30 unique artists in the table")
 
+
+
+class ConcertNumTestCase(TestCase):
+    def setUp(self):
+        addConcert(1, 1, '2024-03-05', 'Electric Plaza', 'Uptown', 500, 85.00)
+        addConcert(2, 1, '2024-03-15', 'Neon Arena', 'Downtown', 1000, 90.00)
+        addConcert(3, 1, '2024-04-01', 'Rock Dome', 'Metropolis', 1500, 95.00)
+        addConcert(4, 1, '2024-04-15', 'Harmony Hall', 'Harmony', 800, 100.00)
+        addConcert(5, 1, '2024-05-02', 'Sunset Pavilion', 'Riverside', 1200, 105.00)
+        addConcert(6, 2, '2024-03-10', 'Sunset Garden', 'Riverside', 700, 90.00)
+        addConcert(7, 2, '2024-03-20', 'Indie Hall', 'Uptown', 900, 95.00)
+        addConcert(8, 2, '2024-04-05', 'Jazz Plaza', 'Downtown', 1100, 100.00)
+        addConcert(9, 2, '2024-04-18', 'Lakeside Arena', 'Lakeside', 600, 105.00)
+        addConcert(10, 2, '2024-05-05', 'Metro Hall', 'Metropolis', 1000, 110.00)
+        addConcert(11, 3, '2024-03-15', 'Jazz Lounge', 'Riverside', 800, 95.00)
+        addConcert(12, 3, '2024-03-30', 'Funky Arena', 'Downtown', 1200, 100.00)
+        addConcert(13, 3, '2024-04-10', 'Groove Plaza', 'Uptown', 1000, 105.00)
+        addConcert(14, 3, '2024-04-22', 'Central Stadium', 'Central', 2000, 110.00)
+        addConcert(15, 3, '2024-05-07', 'Sunset Garden', 'Harmony', 600, 115.00)
+        addConcert(16, 4, '2024-03-20', 'Central Stadium', 'Central', 2000, 110.00)
+        addConcert(17, 4, '2024-04-05', 'Jazz Lounge', 'Riverside', 800, 115.00)
+        addConcert(18, 4, '2024-04-15', 'Groove Plaza', 'Uptown', 1000, 120.00)
+        addConcert(19, 4, '2024-04-27', 'Rock Arena', 'Metropolis', 1500, 125.00)
+        addConcert(20, 4, '2024-05-12', 'Electric Garden', 'West End', 300, 130.00)
+        addConcert(21, 5, '2024-03-25', 'Riverfront Amphitheater', 'Lakeside', 4000, 120.00)
+        addConcert(22, 5, '2024-04-10', 'Sunset Lounge', 'Harmony', 800, 125.00)
+        addConcert(23, 5, '2024-04-20', 'City Stadium', 'Central', 2000, 130.00)
+        addConcert(24, 5, '2024-05-05', 'Indie Hall', 'Uptown', 900, 135.00)
+        addConcert(25, 5, '2024-05-18', 'Metro Plaza', 'Metropolis', 1000, 140.00)
+        addConcert(26, 6, '2024-03-30', 'Electric Arena', 'Uptown', 900, 125.00)
+        addConcert(27, 6, '2024-04-10', 'Pulse Pavilion', 'Harmony', 800, 130.00)
+        addConcert(28, 6, '2024-04-25', 'Echo Lounge', 'Metropolis', 1000, 135.00)
+        addConcert(29, 6, '2024-05-08', 'Sonic Stadium', 'Eastside', 700, 140.00)
+        addConcert(30, 6, '2024-05-22', 'Electric Plaza', 'Uptown', 500, 145.00)
+        addConcert(31, 7, '2024-03-04', 'Echo Hall', 'Metropolis', 1500, 130.00)
+        addConcert(32, 7, '2024-03-20', 'Echo Lounge', 'Metropolis', 1000, 135.00)
+        addConcert(33, 7, '2024-04-10', 'Echo Stadium', 'Metropolis', 2000, 140.00)
+        addConcert(34, 7, '2024-04-20', 'Echo Plaza', 'Metropolis', 1200, 145.00)
+        addConcert(35, 7, '2024-05-10', 'Echo Garden', 'Metropolis', 800, 150.00)
+        addConcert(36, 8, '2024-03-05', 'Sonic Stadium', 'Eastside', 700, 135.00)
+        addConcert(37, 8, '2024-03-15', 'Sonic Hall', 'Eastside', 900, 140.00)
+        addConcert(38, 8, '2024-04-01', 'Sonic Plaza', 'Eastside', 1100, 145.00)
+        addConcert(39, 8, '2024-04-15', 'Sonic Garden', 'Eastside', 600, 150.00)
+        addConcert(40, 8, '2024-05-02', 'Sonic Arena', 'Eastside', 1000, 155.00)
+        addConcert(41, 9, '2024-03-08', 'Retro Plaza', 'West End', 1000, 140.00)
+        addConcert(42, 9, '2024-03-20', 'Retro Lounge', 'West End', 1200, 145.00)
+        addConcert(43, 9, '2024-04-05', 'Retro Garden', 'West End', 600, 150.00)
+        addConcert(44, 9, '2024-04-15', 'Retro Stadium', 'West End', 2000, 155.00)
+        addConcert(45, 9, '2024-05-01', 'Retro Arena', 'West End', 900, 160.00)
+        addConcert(46, 10, '2024-03-02', 'Groove Arena', 'Central', 2000, 145.00)
+        addConcert(47, 10, '2024-03-15', 'Groove Lounge', 'Central', 1200, 150.00)
+        addConcert(48, 10, '2024-04-01', 'Groove Plaza', 'Central', 1500, 155.00)
+        addConcert(49, 10, '2024-04-18', 'Groove Garden', 'Central', 700, 160.00)
+        addConcert(50, 10, '2024-05-05', 'Groove Hall', 'Central', 1000, 165.00)
+        addConcert(51, 11, '2024-03-07', 'Jazz Plaza', 'Riverside', 1000, 150.00)
+        addConcert(52, 11, '2024-03-16', 'Jazz Lounge', 'Riverside', 1200, 155.00)
+        addConcert(53, 11, '2024-04-01', 'Jazz Plaza', 'Riverside', 900, 160.00)
+        addConcert(54, 11, '2024-04-18', 'Jazz Stadium', 'Riverside', 800, 165.00)
+        addConcert(55, 11, '2024-05-01', 'Jazz Garden', 'Riverside', 1100, 170.00)
+        addConcert(56, 12, '2024-03-07', 'Owl''s Nest', 'Lakeside', 800, 155.00)
+        addConcert(57, 12, '2024-03-16', 'Midnight Lounge', 'Lakeside', 1000, 160.00)
+        addConcert(58, 12, '2024-04-01', 'Midnight Plaza', 'Lakeside', 1200, 165.00)
+        addConcert(59, 13, '2024-03-10', 'Blue Lounge', 'Uptown', 800, 160.00)
+        addConcert(60, 13, '2024-03-20', 'Blue Plaza', 'Uptown', 1000, 165.00)
+        addConcert(61, 13, '2024-04-05', 'Blue Garden', 'Uptown', 1200, 170.00)
+        addConcert(62, 13, '2024-04-18', 'Blue Stadium', 'Uptown', 900, 175.00)
+        addConcert(63, 13, '2024-05-01', 'Blue Arena', 'Uptown', 1100, 180.00)
+        addConcert(64, 14, '2024-03-08', 'Velvet Lounge', 'Downtown', 900, 165.00)
+        addConcert(65, 14, '2024-03-18', 'Velvet Plaza', 'Downtown', 1100, 170.00)
+
+        pass
+    
+    def test_unique_concerts_count(self):
+        unique_concerts_count = Concerts.objects.count()
+        expected_concerts = 65
+        self.assertEqual(unique_concerts_count, expected_concerts, "There should be 65 unique concerts")

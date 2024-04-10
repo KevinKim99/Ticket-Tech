@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'CSS/Details-Style.css' %}">
-    <script src="javaScript/cart.js" defer></script>
+    <script src="{% static 'javaScript/cart.js' %}" defer></script>
 </head>
 
 <body>
@@ -16,42 +16,122 @@
             <!-- always update these when you make a new header, do for all pages-->
             <ul>
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
-                <li><a href="{% url 'search-form'%}">Search</a></li>
-                <li><a href="{% url 'login'%}">Log In</a></li>
-                <li><a href="{% url 'signup'%}">Sign Up</a></li>
+                <li><a href="{% url 'search-form' %}">Search</a></li>
+                {% if user.is_authenticated %}
+                    <li><span>Welcome, {{ user.username }}</span></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup'%}">Sign Up</a></li>
+                {% endif %}
             </ul>
         </nav>
-        <div id="cart-icon" onclick="showCart()">🛒</div>
+        <d id="cart-icon" onclick="showCart()">🛒</d>
     </header>
 </body>
-<main>
+<main id="Details"></main>
+
+<script>
+
+function parseURLData(){
+   const url = new URL(window.location.href);
+   return url.searchParams.get('artist');
+}
+
+async function fetchArtistInfo(){
+    try {
+                const response = await fetch('/get_artists/');
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        
+}
+
+async function fetchConcertInfo(){
+    try {
+                const response = await fetch('/get_concerts/');
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data. Status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        
+}
+
+function extractImageId(imageUrl) {
+            const keyStartIndex = imageUrl.indexOf('/d/') + 3; // Index after "/d/ and before /view"
+            const keyEndIndex = imageUrl.indexOf('/view');  // link to where i found this out: https://stackoverflow.com/questions/15557392/how-do-i-display-images-from-google-drive-on-a-website#:~:text=Use%20the%20'Get%20Link'%20option,paste%20the%20link%20in%20there.
+            return imageUrl.substring(keyStartIndex, keyEndIndex); // extracts the wrapper stuff from the link taht is stored in the db
+        }
+
+function generateDetailsHtml(artist,concert){
+    const imageId = extractImageId(artist.ArtistImage);
+    const thumbnailUrl = `https://drive.google.com/thumbnail?id=${imageId}`;
+    return`
     <article>
         <h1>
-            <!--Image-->
             <figure>
-                <img src="images/1-1_image_1080.jpg" alt="Band/person/ team IMG">
+                <img src="${thumbnailUrl}" alt="${artist.ArtistName} Image"> 
             </figure>
-            <!--Important Event Info-->
-            <a rel="author">Artist Name</a>
-            <p>Location: Santa Monica Bay </p>
-            <p>Date: 3:00 PM 23/08/24</p>
-            <p>Price: $250</p>
+            <a rel="author">${artist.ArtistName}</a>
+            <p>Location: ${concert.Venue}, ${concert.City} </p>
+            <p>Date: ${concert.ConcertDate}</p>
+            <p>Price: ${concert.TicketPrice}</p>
+            <p>Quantity: ${concert.TicketQuantity}</p>
             <div>
                 <p2>
-                    <!--Event Description-->
                     <br> Description: The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over
                     the lazy dogThe quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog The quick brown fox jumped over the lazy dog
                     </br>
                 </p2>
             </div>
             <div>
-                <button class="see-more-button" onclick="addToCart('Artist Name', 250)">Add to Cart</button>
+                <button class="see-more-button" onclick="addToCart('${artist.ArtistName}','${concert.TicketPrice}')">Add to Cart</button>
             </div>
         </h1>
-    </article>
-</main>
+    </article>`;
+}
+
+async function renderDetails(){
+    //Linking the generated HTML file to <main>
+    const DetailsPage = document.getElementById('Details');
+    //initalizing information
+    const count = 0;
+    const artistData = await fetchArtistInfo();
+    const concertData = await fetchConcertInfo();
+
+    artistData.forEach(artist => {
+        //Checking artist name from DB with URL data
+        if(artist.ArtistName == parseURLData()){
+            const ArtistId = artist.ArtistId;
+            concertData.forEach(concert => {
+                //Checking if the concert's artist is the same as the one in the page URL. 
+                if(concert.ArtistId == ArtistId){
+                    const detailsHTML = generateDetailsHtml(artist,concert);
+                    DetailsPage.innerHTML += detailsHTML;
+                }
+            });
+        }
+        
+    });
+}
+</script>
+
 <script>
     window.onload = function() {
+        renderDetails();
         displayCartContent();
     };
 </script>

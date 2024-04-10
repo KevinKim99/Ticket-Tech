@@ -127,3 +127,20 @@ article {
     margin: 0 auto;
     margin-bottom: 10px;
 }
+
+.see-more-button {
+    float: right;
+    height: 60px;
+    width: 30%;
+    background-color: #555;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.see-more-button:hover {
+    background-color: #333;
+}
