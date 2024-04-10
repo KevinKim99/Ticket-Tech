@@ -3,7 +3,7 @@ from .models import TodoItem
 from .models import Artists
 from .models import Concerts, Artists, client, payment, myTickets, cart
 from .forms import SignUpForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
@@ -162,6 +162,37 @@ def concerts_view(request):
     concerts = Concerts.objects.all()
     artists = Artists.objects.all()
     return render(request, 'Concerts.html', {'concerts': concerts, 'artists': artists})
+
+def artist_details_view(request, artist_name):
+    artist = get_object_or_404(Artists, ArtistName=artist_name)
+    concerts = Concerts.objects.filter(ArtistId=artist.ArtistId)
+    return render(request, 'Details.html', {'artist': artist, 'concerts': concerts})
+
+def search_results_view(request):
+    query = request.GET.get('q', '')
+    print("Search Query:", query)  # Debugging
+    keywords = query.split()
+    artists = Artists.objects.none()
+    for keyword in keywords:
+        artists |= Artists.objects.filter(ArtistName__icontains=keyword)
+    
+    processed_artists = []
+    for artist in artists:
+        image_id = extract_image_id(artist.ArtistImage)
+        processed_artists.append({'artist': artist, 'image_id': image_id})
+    
+    print("Matching Artists:", processed_artists)  # Debugging
+    return render(request, 'search-results.html', {'artists': processed_artists})
+
+def extract_image_id(image_url):
+    # a weird way of doing things but it works
+    #index of '/d/' which marks the start of the image ID
+    key_start_index = image_url.find('/d/') + 3
+    #index of '/view' which marks the end of the image ID
+    key_end_index = image_url.find('/view')
+    # Extract the image ID from the URL
+    image_id = image_url[key_start_index:key_end_index]
+    return image_id
 
 def logout_view(request):
     logout(request)
