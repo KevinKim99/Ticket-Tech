@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'CSS/Style.css' %}">
-    <script src="javaScript/cart.js" defer></script>
-    <title>Nothing Found</title>
+    <script src="{% static 'javaScript/cart.js' %}" defer></script>
+    <title>Search Form</title>
 </head>
-
 <body>
     <header>
         <h1>Ticket-Tech</h1>
         <nav>
             <ul>
-                <!-- always update these when you make a new header, do for all pages-->
+                <!-- Update these links accordingly -->
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
                 <li><a href="{% url 'search-form' %}">Search</a></li>
                 {% if user.is_authenticated %}
@@ -27,13 +25,46 @@
                 {% endif %}
             </ul>
         </nav>
-        <div id="cart-icon" onclick="showCart()">🛒</div>
     </header>
+    <main>
+        <form action="{% url 'search-results' %}" method="get">
+            <label for="searchQuery">Search:</label>
+            <input type="text" id="searchQuery" name="q" required>
+            <button type="submit">Search</button>
+            <button type="button" onclick="goBackToHome()">X</button>
+        </form>
+    </main>
 
     <main>
-        <!-- simple thwrow message-->
-        <p>Sorry, nothing can be found.</p>
+        <div id="artistList">
+            {% if artists %}
+                {% for artist in artists %}
+                <article>
+                    <h1>
+                        <div>
+                            <a rel="author" href="{% url 'artist-details' artist.ArtistName %}">{{ artist.ArtistName }}</a>
+                        </div>
+                    </h1>
+                    <div>
+                        <figure>
+                            <img src="https://drive.google.com/thumbnail?id={{ artist.ArtistImage }}" alt="{{ artist.ArtistName }} Image">
+                        </figure>
+                        <button class="see-more-button" onclick="goToArtistDetails('{{ artist.ArtistName }}')">See More Details</button>
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <p>No artists found.</p>
+            {% endif %}
+        </div>
     </main>
+    <script>
+        function goToArtistDetails(artistName) {
+            var artistDetailsURL = `/concerts/Details.html/?artist=${encodeURIComponent(artistName)}`;
+            window.location.href = artistDetailsURL;
+        function goBackToHome() {
+            window.location.href = "{% url 'home'%}";
+        }
+    </script>
 </body>
-
 </html>
