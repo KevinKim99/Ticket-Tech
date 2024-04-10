@@ -42,3 +42,7 @@ class myTickets(models.Model):
     ticketPrice = models.IntegerField(default=0)
     ticketSection = models.IntegerField(default=0)
 
+
+class cart(models.Model):
+    userId = models.IntegerField()
+    concertId = models.IntegerField()
