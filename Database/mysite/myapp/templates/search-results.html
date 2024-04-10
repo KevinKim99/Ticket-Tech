@@ -13,7 +13,7 @@
         <h1>Ticket-Tech</h1>
         <nav>
             <ul>
-                <!-- Update these links accordingly -->
+                <!-- always update these when you make a new header, do for all pages-->
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
                 <li><a href="{% url 'search-form' %}">Search</a></li>
                 {% if user.is_authenticated %}
@@ -38,18 +38,18 @@
     <main>
         <div id="artistList">
             {% if artists %}
-                {% for artist in artists %}
+                {% for data in artists %}
                 <article>
                     <h1>
                         <div>
-                            <a rel="author" href="{% url 'artist-details' artist.ArtistName %}">{{ artist.ArtistName }}</a>
+                            <p>{{ data.artist.ArtistName }}</p>
                         </div>
                     </h1>
                     <div>
                         <figure>
-                            <img src="https://drive.google.com/thumbnail?id={{ artist.ArtistImage }}" alt="{{ artist.ArtistName }} Image">
+                            <img src="https://drive.google.com/thumbnail?id={{ data.image_id }}" alt="{{ data.artist.ArtistName }} Image">
                         </figure>
-                        <button class="see-more-button" onclick="goToArtistDetails('{{ artist.ArtistName }}')">See More Details</button>
+                        <button class="see-more-button" onclick="goToArtistDetails('{{ data.artist.ArtistName }}')">See More Details</button>
                     </div>
                 </article>
                 {% endfor %}
@@ -62,6 +62,15 @@
         function goToArtistDetails(artistName) {
             var artistDetailsURL = `/concerts/Details.html/?artist=${encodeURIComponent(artistName)}`;
             window.location.href = artistDetailsURL;
+        }
+
+        function extractImageId(imageUrl) {
+            const keyStartIndex = imageUrl.indexOf('/d/') + 3; // Index after "/d/ and before /view"
+            const keyEndIndex = imageUrl.indexOf('/view');  
+            return imageUrl.substring(keyStartIndex, keyEndIndex);
+        }
+
+
         function goBackToHome() {
             window.location.href = "{% url 'home'%}";
         }

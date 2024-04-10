@@ -175,9 +175,24 @@ def search_results_view(request):
     artists = Artists.objects.none()
     for keyword in keywords:
         artists |= Artists.objects.filter(ArtistName__icontains=keyword)
-    print("Matching Artists:", artists)  # Debugging
-    return render(request, 'search-results.html', {'artists': artists})
+    
+    processed_artists = []
+    for artist in artists:
+        image_id = extract_image_id(artist.ArtistImage)
+        processed_artists.append({'artist': artist, 'image_id': image_id})
+    
+    print("Matching Artists:", processed_artists)  # Debugging
+    return render(request, 'search-results.html', {'artists': processed_artists})
 
+def extract_image_id(image_url):
+    # a weird way of doing things but it works
+    #index of '/d/' which marks the start of the image ID
+    key_start_index = image_url.find('/d/') + 3
+    #index of '/view' which marks the end of the image ID
+    key_end_index = image_url.find('/view')
+    # Extract the image ID from the URL
+    image_id = image_url[key_start_index:key_end_index]
+    return image_id
 
 def logout_view(request):
     logout(request)
