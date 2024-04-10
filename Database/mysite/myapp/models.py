@@ -39,8 +39,6 @@ class myTickets(models.Model):
     id = models.IntegerField(primary_key=True)
     userId = models.IntegerField()
     concertId = models.IntegerField()
-    
-class cart(models.Model):
-    userId = models.IntegerField()
-    concertId = models.IntegerField()
-    
+    ticketPrice = models.IntegerField(default=0)
+    ticketSection = models.IntegerField(default=0)
+
