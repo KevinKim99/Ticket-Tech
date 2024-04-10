@@ -7,6 +7,7 @@ from .models import payment
 from .models import myTickets
 from .models import cart
 
+
 # Register your models here.
 admin.site.register(TodoItem)
 admin.site.register(Artists)

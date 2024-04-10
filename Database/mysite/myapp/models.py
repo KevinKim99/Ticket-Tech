@@ -27,6 +27,7 @@ class client(models.Model):
     name = models.CharField(max_length = 255)
     email = models.CharField(max_length = 255)
     password = models.CharField(max_length = 255)
+    isValid = models.BooleanField(default=False)
 
 class payment(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -43,3 +44,4 @@ class myTickets(models.Model):
 class cart(models.Model):
     userId = models.IntegerField()
     concertId = models.IntegerField()
+    

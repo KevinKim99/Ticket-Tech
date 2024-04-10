@@ -2,6 +2,11 @@ from django.shortcuts import render, HttpResponse
 from .models import TodoItem
 from .models import Artists
 
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from .models import client
+
 from .models import Concerts, Artists, client, payment, myTickets
 from .forms import SignUpForm
 from django.shortcuts import render, redirect
@@ -12,6 +17,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
+
+from django.contrib.auth.hashers import make_password
+from django.shortcuts import render, redirect
+
 
 # Create your views here.
 
@@ -39,6 +48,9 @@ def signup_view(request):
 def userPage_view(request):
     return render(request, 'userPage.html')
 
+def admin_page(request):
+    return render(request, 'admin.html')
+
 def todos(request):
     items = TodoItem.objects.all
     return render(request, "todos.html", {"todos": items})
@@ -51,6 +63,8 @@ def artists(request):
     items = Artists.objects.all
     return render(request, "Artists.html", {"artistNames": items})
 
+
+
 def addConcert(ConcertId, ArtistId, ConcertDate, Venue, City, TicketQuantity, TicketPrice):
     concert = Concerts(ConcertId = ConcertId, ArtistId = ArtistId, ConcertDate = ConcertDate, Venue = Venue, City = City, TicketQuantity = TicketQuantity, TicketPrice = TicketPrice)
     concert.save()
@@ -59,8 +73,8 @@ def addArtist(ArtistId, ArtistName, ArtistImage):
     artist = Artists(ArtistId = ArtistId, ArtistName = ArtistName, ArtistImage = ArtistImage)
     artist.save()
 
-def addClient(id, name, email, password):
-    client2 = client(id = id, name = name, email = email, password = password)
+def addClient(id, name, email, password,isValid):
+    client2 = client(id = id, name = name, email = email, password = password, isValid = isValid)
     client2.save()
 
 def addPayment(id, userId, paymentType, address, postalCode):
@@ -98,18 +112,28 @@ def removeConcert(concert_id):
     concert.delete()
     return True
 
+
+
 def signup_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        is_admin = request.POST.get('is_admin')  # New field for admin toggle
+        
         # Hash the password
         hashed_password = make_password(password)
-        # Create a new client object with hashed password and save it to the database
-        new_client = client(name=username, email=email, password=hashed_password)
+        
+        # Determine if the user is admin based on the toggle
+        is_admin = True if is_admin == 'on' else False
+        
+        # Create a new client object with hashed password and admin status
+        new_client = Client(name=username, email=email, password=hashed_password, isValid=is_admin)
         new_client.save()
+        
         return redirect('login')  # Redirect to the login page after signup
     return render(request, 'signup.html')
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -118,12 +142,35 @@ def login_view(request):
         if user is not None:
             # User authenticated, log in user
             login(request, user)
-            return redirect('home')  # Redirect to home page after login
+            # Check if the user is an admin
+            try:
+                client = Client.objects.get(name=request.POST['username'])
+                is_admin = client.isValid
+            except Client.DoesNotExist:
+                is_admin = False
+            # Redirect to home page after login
+            if is_admin:
+                return redirect('admin_page')
+            else:
+                return redirect('user_page')
         else:
             # Authentication failed, handle error
             return render(request, 'login.html', {'error_message': 'Invalid credentials'})
     else:
         return render(request, 'login.html')
+
+
+def is_admin(request):
+    # Check if the current user is authenticated and if their client model has isValid set to True
+    if request.user.is_authenticated and request.user.client.isValid:
+         # User is an admin, redirect to admin page
+        return redirect('admin_page')
+    else:
+        #         # User is not an admin, return an HttpResponse with an error message
+        return HttpResponse("You do not have permission to access this page.")
+
+
+
 
 def get_artists(request):
     try:

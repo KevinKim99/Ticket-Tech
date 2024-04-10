@@ -8,6 +8,68 @@
     <link rel="stylesheet" href="{% static 'CSS/Signup-Style.css' %}">
     <script src="{% static 'javaScript/cart.js' %}" defer></script>
     <title>Sign Up</title>
+
+    <style>
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+          }
+          
+          .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }
+          
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+          }
+          
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+          }
+          
+          input:checked + .slider {
+            background-color: #2196F3;
+          }
+          
+          input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+          }
+          
+          input:checked + .slider:before {
+            transform: translateX(26px);
+          }
+          
+          /* Rounded sliders */
+          .slider.round {
+            border-radius: 34px;
+          }
+          
+          .slider.round:before {
+            border-radius: 50%;
+          }
+          
+    </style>
+
 </head>
 
 <body>
@@ -27,7 +89,7 @@
 
     <main>
         <div class="container">
-            <form method="post">
+            <form method="post" onsubmit="return validateForm()">
                 {% csrf_token %}
                 <h2>Ticket Tech Registration</h2>
                 <p>Already have an account? <a href="{% url 'login'%}">Log in here</a>.</p>
@@ -47,6 +109,11 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
                 <span id="confirmPasswordError" class="error-message"></span>
 
+                <!-- Button to toggle admin status -->
+                <a>Make admin</a> <button type="button" id="adminToggleButton" onclick="toggleAdminStatus()" class="toggle">
+                    <span class="slider round"></span>
+                  </button>
+                  
                 <button type="submit">Sign Up</button>
             </form>
             <div id="successMessage">Your account has been successfully validated! Page Will Redirect Within 20 Seconds.</div>
@@ -54,6 +121,16 @@
     </main>
     
     <script>
+        // Toggle admin status function
+        function toggleAdminStatus() {
+            var adminToggleButton = document.getElementById("adminToggleButton");
+            if (adminToggleButton.innerText === "Make Admin") {
+                adminToggleButton.innerText = "Remove Admin";
+            } else {
+                adminToggleButton.innerText = "Make Admin";
+            }
+        }
+
         // Validation logic for sign up form
         function validateForm() {
             event.preventDefault();
@@ -113,10 +190,14 @@
             // For now, you can use this function to demonstrate saving data locally
             var userData = JSON.parse(localStorage.getItem("userData")) || [];
 
+            // Determine if admin status is true or false
+            var isAdmin = (document.getElementById("adminToggleButton").innerText === "Remove Admin");
+
             userData.push({
                 username: username,
                 email: email,
-                password: password
+                password: password,
+                isAdmin: isAdmin
             });
 
             localStorage.setItem("userData", JSON.stringify(userData));
@@ -136,4 +217,3 @@
 </body>
 
 </html>
-

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'CSS/Trending-Style.css' %}">
+        <script src="{% static 'javaScript/cart.js' %}" defer></script>
+    </head>
+<body>
+    <header>
+        <h1>Ticket-Tech</h1>
+        <nav>
+            <ul>
+                <!-- Update these links accordingly -->
+
+                <li><a href="{% url 'concerts' %}">Concerts</a></li>
+                <li><a href="{% url 'search-form' %}">Search</a></li>
+                {% if user.is_authenticated %}
+                    <li><span>Welcome, {{ user.username }}</span></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup'%}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div id="cart-icon" onclick="showCart()">🛒</div>
+    </header>
+    <h1>Welcome to Admin Page</h1>
+    
+    <!-- Display all clients -->
+    <h2>Clients:</h2>
+    <ul>
+    {% for client in clients %}
+        <li>{{ client.name }}</li>
+    {% endfor %}
+    </ul>
+
+    <!-- Display all tables -->
+    <h2>Concerts:</h2>
+    <ul>
+    {% for concert in concerts %}
+        <li>{{ concert.ConcertId }} - {{ concert.ArtistId }} - {{ concert.ConcertDate }} - {{ concert.Venue }} - {{ concert.City }} - {{ concert.TicketQuantity }} - {{ concert.TicketPrice }}</li>
+
+        {% endfor %}
+    </ul>
+
+    <h2>Artists:</h2>
+    <ul>
+    {% for artist in artists %}
+        <li>{{ artist.ArtistId }} - {{ artist.ArtistName }} - {{ artist.ArtistImage }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Payments:</h2>
+    <ul>
+    {% for payment in payments %}
+        <li>{{ payment.id }} - {{ payment.userId }} - {{ payment.paymentType }} - {{ payment.address }} - {{ payment.postalCode }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>My Tickets:</h2>
+    <ul>
+    {% for ticket in my_tickets %}
+        <li>{{ ticket.id }} - {{ ticket.userId }} - {{ ticket.concertId }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Carts:</h2>
+    <ul>
+    {% for cart_item in carts %}
+        <li>{{ cart_item.userId }} - {{ cart_item.concertId }}</li>
+    {% endfor %}
+    </ul>
+
+</body>
+<script>
+    async function renderArtists() {
+        const artistListContainer = document.getElementById('artistList'); // Corrected the ID here
+        artistListContainer.innerHTML = ''; // Clear previous content
+
+        const artistData = await fetchArtistsFromDjango();
+
+        if (artistData) {
+            artistData.forEach(artist => {
+                const artistHTML = generateArtistHTML(artist);
+                artistListContainer.innerHTML += artistHTML;
+            });
+        } else {
+            artistListContainer.innerHTML = '<p>Error fetching data. Please try again later.</p>';
+        }
+    }
+    function generateArtistHTML(artist) {
+        const imageId = extractImageId(artist.ArtistImage);
+        const thumbnailUrl = `https://drive.google.com/thumbnail?id=${imageId}`;
+        // sadly thumbnail is the only way to get these images to display, and this also is why the photo quality is absoplute crap 
+        //directLink = `https://drive.google.com/uc?id=${imageId}`;
+        //sharedLink = `https://drive.google.com/file/d/${imageId}/view?usp=sharing`;
+        // both ways above would show better quality images but sadly here we are. 
+
+
+        return `
+        <article>
+            <h1>
+                <div>
+                    <a rel="author">${artist.ArtistName}</a>
+                </div>
+            </h1>
+            <div>
+                <figure>
+                    <img src="${thumbnailUrl}" alt="${artist.ArtistName} Image"> 
+                </figure>
+                <button class="see-more-button" onclick="location.href='Details.html?artist=${artist.ArtistName}'">See More Details</button>
+            </div>
+        </article>`;
+    }
+</script>
+</html>
+

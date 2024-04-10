@@ -17,7 +17,9 @@ urlpatterns = [
     path('get_client/', views.get_client, name='get_client'),
     path('login/', views.login_view, name='login_view'),
     path('logout/', views.logout_view, name='logout'),
-    path('get_payment/', views.get_payment, name='get_payment')
+    path('get_payment/', views.get_payment, name='get_payment'),
+    path('admin_page/', views.admin_page, name='admin_page')
+   
 ]
 
 
