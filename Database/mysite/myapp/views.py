@@ -114,8 +114,7 @@ def signup_view(request):
 def login_view(request):
     # Check if the user is already logged in
     if request.session.get('user_id'):
-        # Redirect to the home page or user dashboard if already logged in
-        return redirect('home')
+        return redirect('userPage')
 
     if request.method == 'POST':
         username = request.POST.get('username')
