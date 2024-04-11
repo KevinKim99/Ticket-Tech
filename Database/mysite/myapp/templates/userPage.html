@@ -23,22 +23,19 @@
     <header>
         <h1>Ticket-Tech</h1>
         <nav>
-            <!-- always update these when you make a new header, do for all pages-->
             <ul>
                 <li><a href="{% url 'concerts' %}">Concerts</a></li>
                 <li><a href="{% url 'search-form' %}">Search</a></li>
-                {% if user.is_authenticated %}
-                    <li><span>Welcome, {{ user.username }}</span></li>
+                {% if client %}
+                    <li><span>Welcome, {{ client.name }}</span></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup'%}">Sign Up</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
                 {% endif %}
             </ul>
-        </nav> 
+        </nav>
     </header>
-
-
 
     <div class="container">
         <div class="w-100 d-flex justify-content-between">

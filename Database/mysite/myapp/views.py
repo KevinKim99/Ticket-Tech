@@ -36,7 +36,17 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def userPage_view(request):
-    return render(request, 'userPage.html')
+    # Retrieve client data if the user is authenticated
+    if request.user.is_authenticated:
+        try:
+            client_data = client.objects.get(email=request.user.email)
+        except client.DoesNotExist:
+            client_data = None
+    else:
+        client_data = None
+
+    return render(request, 'userPage.html', {'client': client_data})
+
 
 def todos(request):
     items = TodoItem.objects.all
@@ -112,11 +122,13 @@ def signup_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        # Authenticate user
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
-            # User authenticated, log in user
-            login(request, user)
+        name = request.POST.get('name')  # Using 'name' field for the client's username
+        password = request.POST.get('password')
+        # Authenticate client using credentials from the client model
+        client = authenticate(request, name=name, password=password)
+        if client is not None:
+            # Login client and create a session
+            login(request, client)
             return redirect('home')  # Redirect to home page after login
         else:
             # Authentication failed, handle error
@@ -124,6 +136,7 @@ def login_view(request):
     else:
         return render(request, 'login.html')
 
+    
 def get_artists(request):
     try:
         # Fetch all artists from the database
@@ -195,5 +208,7 @@ def extract_image_id(image_url):
     return image_id
 
 def logout_view(request):
-    logout(request)
+    if 'client_id' in request.session:
+        del request.session['client_id']
+        del request.session['client_name']
     return redirect('home')

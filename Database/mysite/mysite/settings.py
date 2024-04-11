@@ -126,7 +126,17 @@ STATICFILES_DIRS = [
     BASE_DIR / 'mystaticfiles'
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    # Other authentication backends...
+]
 
+
+# Set the session expiration time (in seconds)
+SESSION_COOKIE_AGE = 3600  # Example: 1 hour
+
+# Set to False to persist the session across browser restarts
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

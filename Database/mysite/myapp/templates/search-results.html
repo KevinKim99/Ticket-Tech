@@ -27,6 +27,7 @@
         </nav>
     </header>
     <main>
+        {{ request.session.client_authenticated }}
         <form action="{% url 'search-results' %}" method="get">
             <label for="searchQuery">Search:</label>
             <input type="text" id="searchQuery" name="q" required>
