@@ -11,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 
@@ -111,18 +112,31 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def login_view(request):
+    # Check if the user is already logged in
+    if request.session.get('user_id'):
+        # Redirect to the home page or user dashboard if already logged in
+        return redirect('home')
+
     if request.method == 'POST':
-        # Authenticate user
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
-            # User authenticated, log in user
-            login(request, user)
-            return redirect('home')  # Redirect to home page after login
-        else:
-            # Authentication failed, handle error
-            return render(request, 'login.html', {'error_message': 'Invalid credentials'})
-    else:
-        return render(request, 'login.html')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = client.objects.get(name=username)
+            if check_password(password, user.password):
+                # Correct password, log the user in by setting the session
+                request.session['user_id'] = user.id
+                # Optionally, store more information in the session
+                request.session['user_name'] = user.name
+                return redirect('userPage')  # Redirect to a user-specific page
+            else:
+                # Incorrect password
+                messages.error(request, "Invalid username or password.")
+        except client.DoesNotExist:
+            # Username does not exist
+            messages.error(request, "Invalid username or password.")
+
+    return render(request, 'login.html')
 
 def get_artists(request):
     try:
@@ -195,5 +209,5 @@ def extract_image_id(image_url):
     return image_id
 
 def logout_view(request):
-    logout(request)
-    return redirect('home')
+    request.session.flush()  # Clears all session data
+    return redirect('home')  # Redirect to the homepage or login page
