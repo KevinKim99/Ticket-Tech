@@ -197,3 +197,7 @@ def extract_image_id(image_url):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+def update_profile(request, userId):
+    client2 = client.objects.get(pk=userId)
+    return render(request, 'events/update_profile')

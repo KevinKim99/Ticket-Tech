@@ -20,6 +20,7 @@ urlpatterns = [
     path("concerts/Details.html/", views.Details_view, name="Details"),
     path('artist/details/<str:artist_name>/', views.artist_details_view, name='artist-details'),
     path("logout/", views.logout_view, name="logout"),  # Moved logout URL pattern here
-    path("get_payment/", views.get_payment, name="get_payment")
+    path("get_payment/", views.get_payment, name="get_payment"),
+    path("update_profile/<userId>", views.update_profile, name="update_profile")
 ]
 
